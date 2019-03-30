@@ -50,6 +50,15 @@ nav #brand {
   align-self: center;
 }
 
+#nomore {
+  display: none;
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+}
+
 .instructions {
   text-align: center;
   margin-top: 4%;
