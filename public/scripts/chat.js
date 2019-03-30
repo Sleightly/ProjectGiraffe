@@ -30,11 +30,11 @@ function authenticate() {
 	}
 	if (myid == user1) {
 		//get user2
+		var name = firebase.firestore().collection('users').doc(user2).data().name;
     console.log("CHANGING NAMES");
-		var name = firebase.firestore().collection('users').doc(user2).name;
 		document.getElementById("otherName").innerText = name;
 	} else {
-		var name = firebase.firestore().collection('users').doc(user1).name;
+		var name = firebase.firestore().collection('users').doc(user1).data().name;
 		document.getElementById("otherName").innerText = name;
 	}
 	loadMessages();
@@ -117,6 +117,9 @@ function getId(user1, user2) {
 
 //Returns a unique identifier for the signed-in user.
 function getUniqueId() {
+  if (!firebase.auth().currentUser) {
+  	window.location.href = 'home.html';
+  } 
   return firebase.auth().currentUser.uid;
 }
 
