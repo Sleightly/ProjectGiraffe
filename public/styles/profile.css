@@ -34,33 +34,37 @@ nav #brand {
   height: 100%;
 }
 
-.cards {
-  flex: 1;
-  background-color: #EEE;
-}
-
-.card {
-  height: 100%;
+.profile-header {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
 }
 
-.card img {
-  width: 100%;
-  align-self: center;
+.profile-header img {
+  box-shadow: 0 0 5px gray;
+  width: 60px;
+  height: 60px;
+  vertical-align: middle;
 }
 
-.modal {
-  font-family: 'Muktal', sans-serif;
+.profile-header p {
+  font-family: 'Mukta', sans-serif;
+  font-weight: 400;
+  font-size: 1.5em;
+  margin: 0;
+  margin-left: 16px;
+}
+
+.profile-info {
+  font-family: 'Mukta', sans-serif;
   font-weight: 300;
-  text-align: center;
-  box-shadow: 0 0 10px black;
-  background-color: white;
-  position: absolute;
-  width: 200px;
-  height: 400px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-100px, -200px);
-  z-index: 999999999;
+  font-size: 1.25em;
+  padding: 0 10%;
+  margin-top: 10%;
+}
+
+.profile-info p {
+  margin: 0;
 }

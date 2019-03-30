@@ -34,33 +34,38 @@ nav #brand {
   height: 100%;
 }
 
-.cards {
-  flex: 1;
-  background-color: #EEE;
-}
-
-.card {
-  height: 100%;
+.message {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  height: 100px;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
 }
 
-.card img {
-  width: 100%;
-  align-self: center;
+.message img {
+  border-radius: 50%;
+  box-shadow: 0 0 5px gray;
+  height: 80px;
+  width: 80px;
 }
 
-.modal {
-  font-family: 'Muktal', sans-serif;
-  font-weight: 300;
-  text-align: center;
-  box-shadow: 0 0 10px black;
-  background-color: white;
-  position: absolute;
-  width: 200px;
-  height: 400px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-100px, -200px);
-  z-index: 999999999;
+.message-text {
+  font-family: 'Mukta', sans-serif;
+  margin-left: 16px;
+}
+
+.message-text * {
+  margin: 0;
+}
+
+.message-text h6 {
+  font-size: 1.25em;
+  font-weight: 400;
+}
+
+.message-text p {
+  font-size: 1em;
+  font-weight: 200;
+  color: #333;
 }
