@@ -111,5 +111,3 @@ function getOtherId() {
   //get other id
 }
 
-saveMessage()
-loadMessages()
