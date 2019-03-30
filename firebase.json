@@ -2,11 +2,8 @@
   "database": {
     "rules": "database.rules.json"
   },
-  "storage": {
-    "rules": "storage.rules"
-  },
   "hosting": {
-    "public": "prod",
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
