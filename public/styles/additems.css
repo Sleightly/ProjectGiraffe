@@ -8,7 +8,7 @@ body {
 
 nav {
   height: 60px;
-  background-color: #C4EDFF;
+  background-color: #60CEFF;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -81,7 +81,7 @@ button {
   font-size: 1.25em;
   font-weight: 400;
   font-family: 'Mukta', sans-serif;
-  background-color: #C4EDFF;
+  background-color: #60CEFF;
   border: none;
   padding: 2% 4%;
 }
