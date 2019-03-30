@@ -39,6 +39,7 @@
     <div class="cards">
       <!-- i used jTinder, i can easily populate the cards dynamically these are just placeholder, also you can take look, there are some callback functions available for if something is liked or disliked for y'all to store in the database-->
       <div id="tinderslide">
+        <p id="nomore">No More<br>To Browse</p>
         <ul id="tinderslideul">
         </ul>
       </div>
@@ -75,6 +76,7 @@
           scripts = document.getElementsByTagName('script')[0];
           script.src = 'js/jquery.jTinder.js';
           scripts.parentNode.insertBefore(script, scripts);
+          document.getElementById('nomore').style.display = "block";
         })
         .catch(function(error) {
           console.log("Error getting documents: ", error);
