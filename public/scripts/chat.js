@@ -54,8 +54,8 @@ function saveMessage(messageText) {
   }
   var uniqueId = getId(user1, user2);
   // Add a new message entry to the Firebase database.
-  return firebase.firestore().collection('chat').doc(uniqueId)
-    .set({
+  return firebase.firestore().collection('chat').doc(uniqueId).collection('msgs')
+    .add({
     from: fromUser,
     to: toUser,
     text: messageText,
@@ -78,8 +78,13 @@ function loadMessages() {
   	iamone = false;
   }
 
+<<<<<<< HEAD
   var query = firebase.firestore().collection('chat').doc(uniqueId).orderBy('timestamp', 'desc').limit(12);
 
+=======
+  var query = firebase.firestore().collection('chat').doc(uniqueId).collection('msgs').orderBy('timestamp', 'desc').limit(12);
+  
+>>>>>>> 6eaba3ee3cc0a7ea063ae28e03d4add960e18135
   // Start listening to the query.
   query.onSnapshot(function(snapshot) {
     snapshot.docChanges().forEach(function(change) {
