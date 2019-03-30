@@ -5,13 +5,6 @@ function updateName(newName) {
 	})
 }
 
-function updateBio(newBio) {
-	var user = getUserName();
-	firebase.firestore().collection('users').doc(user).update({
-		"Bio": newBio
-	})
-}
-
 function updateLocation(newLoc) {
 	var user = getUserName();
 	firebase.firestore().collection('users').doc(user).update({
@@ -19,37 +12,37 @@ function updateLocation(newLoc) {
 	})
 }
 
-function addPreferences(newPrefs) {
+function changePreferences(oldPrefs) {
 	var user = getUserName();
-	var currPref = (firebase.firestore().collection('users').doc(user).preferences).concat(newPrefs);
 	firebase.firestore().collection('users').doc(user).update({
 		preferences: currPref
 	})
 }
 
-function removePreferences(oldPrefs) {
+function addOwnedItems(item) {
 	var user = getUserName();
-	var currPref = firebase.firestore().collection('users').doc(user).preferences;
-	currPref.filter(value => oldPrefs.includes(value))
+	var cItems;
+	firebase.firestore().collection('users').doc(user).get()
+      .then(function(doc) {
+        cItems = doc.data().ownedItems;
+      })
+    cItems = cItems.push(item);
 	firebase.firestore().collection('users').doc(user).update({
-		preferences: currPref
+		ownedItems: cItems
 	})
 }
 
-function addOwnedItems(items) {
+function removeOwnedItems(item) {
 	var user = getUserName();
-	var currItems = (firebase.firestore().collection('users').doc(user).ownedItems).concat(items);
+	var cItems;
+	firebase.firestore().collection('users').doc(user).get()
+      .then(function(doc) {
+        cItems = doc.data().ownedItems;
+      })
+    var index = cItems.indexOf(item);
+	if (index !== -1) cItems.splice(index, 1);
 	firebase.firestore().collection('users').doc(user).update({
-		ownedItems: currItems
-	})
-}
-
-function removeOwnedItems(items) {
-	var user = getUserName();
-	var currItems = firebase.firestore().collection('users').doc(user).ownedItems;
-	currItems.filter(value => items.includes(value))
-	firebase.firestore().collection('users').doc(user).update({
-		ownedItems: currItems
+		ownedItems: cItems
 	})
 }
 
