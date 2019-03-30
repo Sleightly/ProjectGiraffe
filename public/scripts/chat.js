@@ -21,7 +21,6 @@ function getUrlVar(name) {
 
 //authenticate
 function authenticate() {
-  console.log("IM AUTHETNTICATING");
 	var user1 = getUrlVar('p1');
 	var user2 = getUrlVar('p2');
 	var myid = getUniqueId();
@@ -30,11 +29,20 @@ function authenticate() {
 	}
 	if (myid == user1) {
 		//get user2
-		var name = firebase.firestore().collection('users').doc(user2).data().name;
-    console.log("CHANGING NAMES");
+    var name;
+		firebase.firestore().collection('users').doc(user2)
+      .get()
+      .then(function(doc) {
+        name = doc.data().name;
+      })
 		document.getElementById("otherName").innerText = name;
 	} else {
-		var name = firebase.firestore().collection('users').doc(user1).data().name;
+    var name;
+		firebase.firestore().collection('users').doc(user1)
+      .get()
+      .then(function(doc) {
+        name = doc.data().name;
+      })
 		document.getElementById("otherName").innerText = name;
 	}
 	loadMessages();
@@ -78,7 +86,7 @@ function loadMessages() {
   	iamone = false;
   }
 
-  var query = firebase.firestore().collection('chat').doc(uniqueId).collection('msgs').orderBy('timestamp', 'desc').limit(12);
+  var query = firebase.firestore().collection('chat').doc(uniqueId).collection('msgs').orderBy('timestamp').limit(12);
 
   // Start listening to the query.
   query.onSnapshot(function(snapshot) {
@@ -119,7 +127,7 @@ function getId(user1, user2) {
 function getUniqueId() {
   if (!firebase.auth().currentUser) {
   	window.location.href = 'index.html';
-  } 
+  }
   return firebase.auth().currentUser.uid;
 }
 
