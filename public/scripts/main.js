@@ -27,7 +27,11 @@ function signIn() {
       id: getUniqueId(),
       preferences: [],
       matches: [],
-    })}).catch(function(error) {
+    });
+    if (firebase.auth().currentUser) {
+      window.location.href = 'home.html';
+    }
+  }).catch(function(error) {
       console.error('Error sending profile information to Firebase Database', error);
     });
 }
@@ -213,6 +217,8 @@ function authStateObserver(user) {
 
     // We save the Firebase Messaging Device token and enable notifications.
     saveMessagingDeviceToken();
+
+    window.location.href = '../home.html';
   } else { // User is signed out!
     // Hide user's profile and sign-out button.
     userNameElement.setAttribute('hidden', 'true');
