@@ -176,3 +176,45 @@
 	};
 
 })(jQuery, window, document);
+
+$("#tinderslide").jTinder({
+    onDislike: function (item) {
+        alert('Dislike image ' + (item.index()+1));
+    },
+    onLike: function (item) {
+        wantItem(item);
+		console.log("liked!");
+    },
+	animationRevertSpeed: 200,
+	animationSpeed: 400,
+	threshold: 1,
+	likeSelector: '.like',
+	dislikeSelector: '.dislike'
+});
+
+function wantItem(itemRef) {
+	var ref = firebase.database().ref('users');
+  /*
+	// Create a reference for a new rating, for use inside the transaction
+	var ratingRef = restaurantRef.collection('ratings').doc();
+  
+	// In a transaction, update the aggregate totals
+	return db.addMatch(itemWanted => {
+		return itemWanted.get(itemRef).then(res => {
+			if (!res.exists) {
+				throw "item does not exist!";
+			}
+  */
+			// Get the current user's matches array and add item
+			var currMatch = ref.orderByChild('id').equalTo(getUniqueId()).matches
+  
+  
+			// Commit to Firestore
+			currMatch.update({
+				"matches":
+				  FieldValue.arrayUnion(itemRef)
+			});
+		  console.loe("i made it...");
+  /*      })
+	});*/
+  }
