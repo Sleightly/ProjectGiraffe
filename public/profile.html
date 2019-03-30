@@ -6,6 +6,7 @@
     <title></title>
     <link href="https://fonts.googleapis.com/css?family=Mukta:200,300,400,500,600,700,800" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles/profile.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   </head>
   <body>
     <nav>
@@ -23,15 +24,30 @@
     </nav>
     <div class="profile">
       <div class="profile-header">
-        <img>
+        <div class="profile-pic">
+          <img>
+          <i onclick="!!" class="fas fa-pen-square pic-edit"></i>
+        </div>
         <p>Hubert Dubert</p>
       </div>
       <div class="profile-info">
-        <p>Location: San Diego</p>
-        <p>Interested in: Food, Furniture</p>
+        <p>Location: San Diego<i onclick="!!" class="fas fa-pencil-alt"></i></p>
+        <p>Interested in:
+          <select>
+            <option>Academics</option>
+            <option>Accessories</option>
+            <option>Clothing</option>
+            <option>Entertainment</option>
+            <option>Food</option>
+            <option>Furniture</option>
+            <option>Vehicles</option>
+            <option selected>Anything</option>
+          </select>
+        </p>
       </div>
       <div class="for-trade-head">
         <p>Current Offers</p>
+        <i onclick="!!" class="fas fa-plus"></i>
       </div>
       <div class="for-trade-items">
         <div class="for-trade-item">

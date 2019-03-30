@@ -34,6 +34,11 @@ nav #brand {
   height: 100%;
 }
 
+i {
+  display: inline-block;
+  margin-left: 8px;
+}
+
 .profile-header {
   display: flex;
   flex-direction: row;
@@ -42,11 +47,23 @@ nav #brand {
   margin-top: 10%;
 }
 
-.profile-header img {
+.profile-header .profile-pic {
   box-shadow: 0 0 5px gray;
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   vertical-align: middle;
+  position: relative;
+}
+
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+}
+
+.pic-edit {
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 
 .profile-header p {
@@ -73,13 +90,17 @@ nav #brand {
 
 .for-trade-head {
   background-color: #EEE;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2% 8%;
 }
 
 .for-trade-head p {
   margin: 0;
   font-family: 'Mukta', sans-serif;
   font-size: 1.5em;
-  padding: 2% 8%;
 }
 
 .for-trade-items {
