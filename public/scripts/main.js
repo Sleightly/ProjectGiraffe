@@ -27,14 +27,14 @@ function signIn() {
       id: getUniqueId(),
       preferences: [],
       matches: [],
+    }).then(function() {
+      if (firebase.auth().currentUser) {
+        window.location.href = 'home.html';
+      }
     });
-    var user = firebase.auth().currentUser;
-    if(user) {
-      window.location.href = 'home.html';
-    }
   }).catch(function(error) {
       console.error('Error sending profile information to Firebase Database', error);
-    });
+  });
 }
 
 // Signs-out of Friendly Chat.
