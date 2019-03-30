@@ -48,6 +48,12 @@
   </body>
   <script type="text/javascript" src="scripts/chat.js"></script>
   <script>
+
+    function sendMessage() {
+      saveMessage(document.getElementById('msg').value);
+      document.getElementById('msg').value = '';
+    }
+
     window.onload = function(e){
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -56,17 +62,13 @@
           window.location.href = 'index.html';
         }
       });
-
-      function sendMessage() {
-        saveMessage(document.getElementById('msg').value);
-        document.getElementById('msg').value = '';
-      }
-
-      document.body.addEventListener('keyup', function(e) {
-        if(e.code === 13) {
-          sendMessage();
-        }
-      })
     }
+
+    document.body.addEventListener('keyup', function(e) {
+      if(e.code === 13) {
+        console.log(e.code);
+        sendMessage();
+      }
+    })
   </script>
 </html>

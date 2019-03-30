@@ -86,17 +86,19 @@ function loadMessages() {
   	iamone = false;
   }
 
-  var query = firebase.firestore().collection('chat').doc(uniqueId).collection('msgs').orderBy('timestamp', 'desc').limit(12);
+  var query = firebase.firestore().collection('chat').doc(uniqueId).collection('msgs').orderBy('timestamp').limit(12);
+
+  var texts = document.getElementsByClassName('dm-body')[0];
+  texts.innerHTML = "";
 
   // Start listening to the query.
   query.onSnapshot(function(snapshot) {
     snapshot.docChanges().forEach(function(change) {
         var message = change.doc.data();
-        var texts = document.getElementsByClassName('dm-body')[0];
         var para = document.createElement("p");
-		para.innerText = message.text;
-		var div = document.createElement("div");
-		div.appendChild(para);
+    		para.innerText = message.text;
+    		var div = document.createElement("div");
+    		div.appendChild(para);
         if (message.from == user1) {
         	if (iamone) {
         		div.classList.add("speech-bubble-out");
