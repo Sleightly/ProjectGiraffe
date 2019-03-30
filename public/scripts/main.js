@@ -24,6 +24,9 @@ function signIn() {
       name: getUserName(),
       profilePicUrl: getProfilePicUrl(),
       email: getEmail(),
+      id: getUniqueId(),
+      preferences: [],
+      matches: [],
     })}).catch(function(error) {
       console.error('Error sending profile information to Firebase Database', error);
     });
@@ -54,6 +57,11 @@ function getUserName() {
 //Returns the signed-in user's email.
 function getEmail() {
   return firebase.auth().currentUser.email;
+}
+
+//Returns a unique identifier for the signed-in user.
+function getUniqueId() {
+  return firebase.auth().currentUser.uid;
 }
 
 // Returns true if a user is signed-in.
