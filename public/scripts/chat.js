@@ -40,13 +40,22 @@ function authenticate() {
 
 
 // Saves a new message on the Cloud Firestore.
-function saveMessage(messageText, user1, user2) {
+function saveMessage(messageText) {
+  var myid = getUniqueId();
+  var user1 = getUrlVars('p1');
+  var user2 = getUrlVars('p2');
+  var fromUser = user1;
+  var toUser = user2;
+  if (user2 == myid) {
+  	fromUser = user2;
+  	toUser = user1;
+  }
   var uniqueId = getId(user1, user2);
   // Add a new message entry to the Firebase database.
   return firebase.firestore().collection('chat').doc(uniqueId)
     .set({
-    from: user1,
-    to: user2,
+    from: fromUser,
+    to: toUser,
     text: messageText,
     timestamp: firebase.firestore.FieldValue.serverTimestamp()
   }).catch(function(error) {
