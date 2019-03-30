@@ -48,20 +48,25 @@
   </body>
   <script type="text/javascript" src="scripts/chat.js"></script>
   <script>
-    function sendMessage() {
-      saveMessage(document.getElementById('msg').value);
-      document.getElementById('msg').value = '';
-    }
-  </script>
-  <script>
     window.onload = function(e){
-      authenticate();
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          authenticate();
+        } else {
+          window.location.href = 'index.html';
+        }
+      });
 
       document.body.addEventListener('keyup', function(e) {
         if(e.code === 13) {
           sendMessage();
         }
       })
+
+      function sendMessage() {
+        saveMessage(document.getElementById('msg').value);
+        document.getElementById('msg').value = '';
+      }
     }
   </script>
 </html>
