@@ -49,15 +49,20 @@
         </div>
       </div>
       <div class="dm-foot">
-        <input type="text">
-        <button>Send</button>
+        <input type="text" id="msg">
+        <button onclick="sendMessage();">Send</button>
       </div>
     </div>
   </body>
+  <script type="text/javascript" src="chat.js"></script>
+  <script>
+    function sendMessage() {
+      saveMessage(document.getElementById('msg').value);
+    }
+  </script>
   <script type="text/javascript">
     window.document.onload = function(e){
       authenticate();
     }
   </script>
-  <script type="text/javascript" src="chat.js"></script>
 </html>
