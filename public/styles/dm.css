@@ -7,7 +7,7 @@ body {
 }
 
 nav {
-  height: 60px;
+  height: 65.95px;
   background-color: #C4EDFF;
   display: flex;
   flex-direction: row;
@@ -61,6 +61,13 @@ nav #brand {
   padding: 4% 0;
   margin-top: 4%;
   overflow-y: scroll;
+  font-family: 'Mukta', sans-serif;
+  font-size: 1em;
+}
+
+.dm-body p {
+  margin: 0;
+  padding: 2%;
 }
 
 .speech-bubble-in {

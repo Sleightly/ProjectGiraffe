@@ -21,11 +21,17 @@
         </a>
       </div>
     </nav>
-    <div class="message">
+    <div class="message" id="message1">
       <img src="..">
       <div class="message-text">
         <h6>Honker Donker</h6>
         <p>You: I like those socks!</p>
+      </div>
     </div>
+    <script>
+      document.getElementById('message1').addEventListener('click', function() {
+        window.location.href = 'dm.html';
+      });
+    </script>
   </body>
 </html>
