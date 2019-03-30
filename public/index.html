@@ -16,7 +16,7 @@
     </div>
     <div class="button-div">
       <button id="login">
-        <span class="google"></span>Sign in with Google
+        <span class="google" onclick="signIn()"></span>Sign in with Google
       </button>
     </button>
     <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
@@ -32,5 +32,6 @@
       };
       firebase.initializeApp(config);
     </script>
+    <script src="scripts/main.js"></script>
   </body>
 </html>
