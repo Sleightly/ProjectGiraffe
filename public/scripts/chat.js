@@ -71,7 +71,6 @@ function saveMessage(messageText) {
   }).catch(function(error) {
     console.error('Error writing new message to Firebase Database', error);
   });
-  loadMessages();
 }
 
 // Loads chat messages history and listens for upcoming ones.
@@ -88,32 +87,39 @@ function loadMessages() {
 
   var query = firebase.firestore().collection('chat').doc(uniqueId).collection('msgs').orderBy('timestamp').limit(12);
 
+  var texts = document.getElementsByClassName('dm-body')[0];
+  texts.innerHTML = "";
+
   // Start listening to the query.
   query.onSnapshot(function(snapshot) {
     snapshot.docChanges().forEach(function(change) {
         var message = change.doc.data();
-        var texts = document.getElementsByClassName('dm-body')[0];
-        var para = document.createElement("p");
-		para.innerText = message.text;
-		var div = document.createElement("div");
-		div.appendChild(para);
-        if (message.from == user1) {
-        	if (iamone) {
-        		div.classList.add("speech-bubble-out");
-        	} else {
-        		div.classList.add("speech-bubble-in");
-        	}
-        } else {
-        	if (iamone) {
-        		div.classList.add("speech-bubble-in");
-        	} else {
-        		div.classList.add("speech-bubble-out");
-        	}
-        }
-        texts.appendChild(div);
+        displayMessage(message);
     });
   });
 }
+
+function displayMessage(message) {
+  var para = document.createElement("p");
+  para.innerText = message.text;
+  var div = document.createElement("div");
+  div.appendChild(para);
+  if (message.from == user1) {
+    if (iamone) {
+      div.classList.add("speech-bubble-out");
+    } else {
+      div.classList.add("speech-bubble-in");
+    }
+  } else {
+    if (iamone) {
+      div.classList.add("speech-bubble-in");
+    } else {
+      div.classList.add("speech-bubble-out");
+    }
+  }
+  texts.appendChild(div);
+}
+
 
 function getId(user1, user2) {
   var uniqueId = user1+user2;
@@ -135,3 +141,6 @@ function getUniqueId() {
 function getOtherId() {
   //get other id
 }
+
+
+loadMessages();
