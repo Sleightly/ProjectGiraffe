@@ -21,8 +21,8 @@ function getUrlVar(name) {
 
 //authenticate
 function authenticate() {
-	var user1 = getUrlVars('p1');
-	var user2 = getUrlVars('p2');
+	var user1 = getUrlVar('p1');
+	var user2 = getUrlVar('p2');
 	var myid = getUniqueId();
 	if (myid != user1 && myid != user2) {
 		window.location.href = 'home.html';
@@ -64,7 +64,9 @@ function saveMessage(messageText) {
 }
 
 // Loads chat messages history and listens for upcoming ones.
-function loadMessages(user1, user2) {
+function loadMessages() {
+  var user1 = getUrlVar('p1');
+  var user2 = getUrlVar('p2');
   var uniqueId = getId(user1, user2);
   var iamone = true;
 
