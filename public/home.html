@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title></title>
+    <link href="https://fonts.googleapis.com/css?family=Mukta:200,300,400,500,600,700,800" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="styles/jTinder.css">
+    <link rel="stylesheet" type="text/css" href="styles/home.css">
+  </head>
+  <body>
+    <nav>
+      <a href="home.html" id="brand">
+        <img src="images/logo.png">
+      </a>
+      <a href="message.html">
+        <img src="images/message.svg">
+      </a>
+    </nav>
+    <div class="cards">
+      <div id="tinderslide">
+        <ul>
+          <li class="pane1"><div class="img"></div><div>Books</div><div class="like"></div><div class="dislike"></div></li>
+          <li class="pane2"><div class="img"></div><div>Shirt</div><div class="like"></div><div class="dislike"></div></li>
+          <li class="pane3"><div class="img"></div><div>Spoon</div><div class="like"></div><div class="dislike"></div></li>
+        </ul>
+      </div>
+    </div>
+    <!-- jQuery lib -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <!-- transform2d lib -->
+    <script type="text/javascript" src="js/jquery.transform2d.js"></script>
+    <!-- jTinder lib -->
+    <script type="text/javascript" src="js/jquery.jTinder.js"></script>
+    <!-- jTinder initialization script -->
+    <script>$("#tinderslide").jTinder();</script>
+  </body>
+</html>
