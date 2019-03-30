@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "project-giraffe-4c1a9"
+    "default": "project-giraffe-4c1a9",
+    "giragge": "project-giraffe-4c1a9",
+    "giraffe": "project-giraffe-4c1a9"
   }
 }
