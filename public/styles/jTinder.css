@@ -17,7 +17,9 @@ body {
 
 #tinderslide {
     position: relative;
-    background: #fff;
+    background-image: url('../images/nomore.png');
+    background-repeat: no-repeat;
+    background-size: contain;
     width: 95%;
     height: 100%;
 }
