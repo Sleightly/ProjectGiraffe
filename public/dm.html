@@ -55,8 +55,13 @@
   </script>
   <script>
     window.onload = function(e){
-      console.log("IM READY!");
       authenticate();
+
+      document.body.addEventListener('keyup', function(e) {
+        if(e.code === 13) {
+          sendMessage();
+        }
+      })
     }
   </script>
 </html>
