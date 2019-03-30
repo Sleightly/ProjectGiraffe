@@ -193,7 +193,7 @@ $("#tinderslide").jTinder({
 });
 
 function wantItem(itemRef) {
-	var ref = firebase.database().ref('users');
+	var ref = firebase.database().collection('users');
   /*
 	// Create a reference for a new rating, for use inside the transaction
 	var ratingRef = restaurantRef.collection('ratings').doc();
@@ -206,8 +206,15 @@ function wantItem(itemRef) {
 			}
   */
 			// Get the current user's matches array and add item
-			var currMatch = ref.orderByChild('id').equalTo(getUniqueId()).matches
+			var currMatch = ref.where("id", "==", getUniqueId()).matches
   
+			firebase.firestore()
+			.collection('users')
+			.doc('8JPhhjfCz0GuNz4lUnD8')
+			.set(
+			{ matches: [{ who: "third@test.com", when: new Date() }] },
+			{ merge: true }
+			)
   
 			// Commit to Firestore
 			currMatch.update({
