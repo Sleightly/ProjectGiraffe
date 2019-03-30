@@ -21,6 +21,7 @@ function getUrlVar(name) {
 
 //authenticate
 function authenticate() {
+  console.log("IM AUTHETNTICATING");
 	var user1 = getUrlVar('p1');
 	var user2 = getUrlVar('p2');
 	var myid = getUniqueId();
@@ -30,6 +31,7 @@ function authenticate() {
 	if (myid == user1) {
 		//get user2
 		var name = firebase.firestore().collection('users').doc(user2).data().name;
+    console.log("CHANGING NAMES");
 		document.getElementById("otherName").innerText = name;
 	} else {
 		var name = firebase.firestore().collection('users').doc(user1).data().name;
@@ -61,6 +63,7 @@ function saveMessage(messageText) {
   }).catch(function(error) {
     console.error('Error writing new message to Firebase Database', error);
   });
+  loadMessages();
 }
 
 // Loads chat messages history and listens for upcoming ones.
@@ -76,7 +79,7 @@ function loadMessages() {
   }
 
   var query = firebase.firestore().collection('chat').doc(uniqueId).collection('msgs').orderBy('timestamp', 'desc').limit(12);
-  
+
   // Start listening to the query.
   query.onSnapshot(function(snapshot) {
     snapshot.docChanges().forEach(function(change) {
@@ -124,4 +127,3 @@ function getUniqueId() {
 function getOtherId() {
   //get other id
 }
-
