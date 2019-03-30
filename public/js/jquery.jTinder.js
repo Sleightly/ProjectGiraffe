@@ -197,7 +197,7 @@ function wantItem(itemRef) {
   /*
 	// Create a reference for a new rating, for use inside the transaction
 	var ratingRef = restaurantRef.collection('ratings').doc();
-  
+
 	// In a transaction, update the aggregate totals
 	return db.addMatch(itemWanted => {
 		return itemWanted.get(itemRef).then(res => {
@@ -207,14 +207,17 @@ function wantItem(itemRef) {
   */
 			// Get the current user's matches array and add item
 			var currMatch = ref.orderByChild('id').equalTo(getUniqueId()).matches
-  
-  
+
+
 			// Commit to Firestore
 			currMatch.update({
 				"matches":
 				  FieldValue.arrayUnion(itemRef)
 			});
-		  console.loe("i made it...");
+		  console.log("i made it...");
   /*      })
 	});*/
   }
+
+
+$('#tinderslide').jTinder();
