@@ -1,0 +1,66 @@
+body {
+  margin: 0;
+}
+
+nav {
+  height: 60px;
+  background-color: #C4EDFF;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 16px;
+  box-shadow: 0 0 10px black;
+  z-index: 999999;
+}
+
+nav img {
+  height: 100%;
+}
+
+nav div {
+  height: 60%;
+  margin: auto 0;
+}
+
+nav div a {
+  margin-right: 8px;
+}
+
+nav #brand {
+  height: 100%;
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.profile-header img {
+  box-shadow: 0 0 5px gray;
+  width: 60px;
+  height: 60px;
+  vertical-align: middle;
+}
+
+.profile-header p {
+  font-family: 'Mukta', sans-serif;
+  font-weight: 400;
+  font-size: 1.5em;
+  margin: 0;
+  margin-left: 16px;
+}
+
+.profile-info {
+  font-family: 'Mukta', sans-serif;
+  font-weight: 300;
+  font-size: 1.25em;
+  padding: 0 10%;
+  margin-top: 10%;
+}
+
+.profile-info p {
+  margin: 0;
+}
