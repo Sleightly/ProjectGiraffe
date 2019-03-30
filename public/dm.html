@@ -23,7 +23,7 @@
     </nav>
     <div class="dm">
       <div class="dm-head">
-        <h6>Honker Bonker</h6>
+        <h6 id="otherName"></h6>
       </div>
       <div class="dm-body">
         <div class="speech-bubble-in">
@@ -54,4 +54,10 @@
       </div>
     </div>
   </body>
+  <script type="text/javascript">
+    window.document.onload = function(e){
+      authenticate();
+    }
+  </script>
+  <script type="text/javascript" src="chat.js"></script>
 </html>
