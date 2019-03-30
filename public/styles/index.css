@@ -1,0 +1,86 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+}
+
+body::before {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  background-image: url('../images/bg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.8;
+}
+
+nav {
+  background-color: #D8F2FF;
+  padding: 4% 0;
+  box-shadow: 0 0 10px black;
+}
+
+nav img {
+  width: 50%;
+  display: block;
+  margin: 0 auto;
+}
+
+.motto {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 10%;
+}
+
+.motto p {
+  font-family: 'Mukta', sans-serif;
+  text-align: center;
+  font-weight: 200;
+  font-size: 1.75em;
+  color: white;
+}
+
+.button-div {
+  padding: 15% 0;
+  background-color: #D8F2FF;
+  box-shadow: 0 0 10px black;
+}
+
+#login {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  padding: 8px 16px;
+  font-size: 1.25em;
+  border: 3px solid #AAA;
+  border-bottom: 3px solid #333;
+  border-right: 3px solid #333;
+}
+
+#login:active {
+  border-width: 1px;
+  padding: 10px 16px;
+  color: #555;
+}
+
+.google {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-image: url('../images/google.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 8px;
+}
