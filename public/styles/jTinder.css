@@ -138,20 +138,6 @@ body {
     -webkit-transform-style: preserve-3d;
 }
 
-/* jTinder images */
-#tinderslide .pane3 .img {
-    background: url("../images/spoon.jpeg") no-repeat scroll center center;
-    background-size: cover;
-}
-#tinderslide .pane2 .img {
-    background: url("../images/shirt.jpg") no-repeat scroll center center;
-    background-size: cover;
-}
-#tinderslide .pane1 .img {
-    background: url("../images/books.jpg") no-repeat scroll center center;
-    background-size: cover;
-}
-
 /* jTinder status text */
 #status {
     text-align: center;
