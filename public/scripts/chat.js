@@ -42,8 +42,8 @@ function authenticate() {
 // Saves a new message on the Cloud Firestore.
 function saveMessage(messageText) {
   var myid = getUniqueId();
-  var user1 = getUrlVars('p1');
-  var user2 = getUrlVars('p2');
+  var user1 = getUrlVar('p1');
+  var user2 = getUrlVar('p2');
   var fromUser = user1;
   var toUser = user2;
   if (user2 == myid) {
