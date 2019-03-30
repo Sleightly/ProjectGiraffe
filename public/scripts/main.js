@@ -27,7 +27,12 @@ function signIn() {
       id: getUniqueId(),
       preferences: [],
       matches: [],
-    })}).catch(function(error) {
+    });
+    var user = firebase.auth().currentUser;
+    if(user) {
+      window.location.href = 'home.html';
+    }
+  }).catch(function(error) {
       console.error('Error sending profile information to Firebase Database', error);
     });
 }
@@ -36,12 +41,6 @@ function signIn() {
 function signOut() {
   // Sign out of Firebase.
   firebase.auth().signOut();
-}
-
-// Initiate firebase auth.
-function initFirebaseAuth() {
-  // Listen to auth state changes.
-  firebase.auth().onAuthStateChanged(authStateObserver);
 }
 
 // Returns the signed-in user's profile Pic URL.
@@ -68,27 +67,3 @@ function getUniqueId() {
 function isUserSignedIn() {
   return !!firebase.auth().currentUser;
 }
-
-
-// Checks that the Firebase SDK has been correctly setup and configured.
-function checkSetup() {
-  if (!window.firebase || !(firebase.app instanceof Function) || !firebase.app().options) {
-    window.alert('You have not configured and imported the Firebase SDK. ' +
-        'Make sure you go through the codelab setup instructions and make ' +
-        'sure you are running the codelab using `firebase serve`');
-  }
-}
-
-// Checks that Firebase has been imported.
-checkSetup();
-
-// initialize Firebase
-//initFirebaseAuth();
-
-// Remove the warning about timstamps change. 
-var firestore = firebase.firestore();
-var settings = {timestampsInSnapshots: true};
-firestore.settings(settings);
-
-// We load currently existing chat messages and listen to new ones.
-loadMessages();
