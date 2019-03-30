@@ -118,7 +118,7 @@ function getId(user1, user2) {
 //Returns a unique identifier for the signed-in user.
 function getUniqueId() {
   if (!firebase.auth().currentUser) {
-  	window.location.href = 'home.html';
+  	window.location.href = 'index.html';
   } 
   return firebase.auth().currentUser.uid;
 }
