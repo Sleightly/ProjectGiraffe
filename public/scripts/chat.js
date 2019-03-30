@@ -29,11 +29,20 @@ function authenticate() {
 	}
 	if (myid == user1) {
 		//get user2
-		var name = firebase.firestore().collection('users').doc(user2).data().name;
-    console.log("CHANGING NAMES");
+    var name;
+		firebase.firestore().collection('users').doc(user2)
+      .get()
+      .then(function(doc) {
+        name = doc.data().name;
+      })
 		document.getElementById("otherName").innerText = name;
 	} else {
-		var name = firebase.firestore().collection('users').doc(user1).data().name;
+    var name;
+		firebase.firestore().collection('users').doc(user1)
+      .get()
+      .then(function(doc) {
+        name = doc.data().name;
+      })
 		document.getElementById("otherName").innerText = name;
 	}
 	loadMessages();
