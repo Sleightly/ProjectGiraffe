@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title></title>
+    <link href="https://fonts.googleapis.com/css?family=Mukta:200,300,400,500,600,700,800" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="styles/additems.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav>
+      <a href="home.html" id="brand">
+        <img src="images/logo.png">
+      </a>
+      <div>
+        <a href="message.html">
+          <img src="images/message.svg">
+        </a>
+        <a href="profile.html">
+          <img src="images/profile.svg" style="background-color: rgba(255, 255, 255, 0.8); border-radius: 25%;">
+        </a>
+      </div>
+    </nav>
+    <div class="photo">
+      <input type="file" id="files" accept="image/*;capture=camera" />
+      <div class="photo-preview">
+        <img id="image">
+      </div>
+    </div>
+    <div class="item-info">
+      <p>Title <input type="text"></p>
+      <p>Category
+        <select>
+          <option>Academics</option>
+          <option>Accessories</option>
+          <option>Clothing</option>
+          <option>Entertainment</option>
+          <option>Food</option>
+          <option>Furniture</option>
+          <option>Vehicles</option>
+          <option selected>Miscellaneous</option>
+        </select>
+      </p>
+    </div>
+    <button>Submit</button>
+    <script>
+      document.getElementById("files").onchange = function () {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            // get loaded data and render thumbnail.
+            document.getElementById("image").src = e.target.result;
+        };
+
+        // read the image file as a data URL.
+        reader.readAsDataURL(this.files[0]);
+      };
+    </script>
+  </body>
+</html>
