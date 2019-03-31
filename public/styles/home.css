@@ -8,7 +8,7 @@ body {
 
 nav {
   height: 60px;
-  background-color: #C4EDFF;
+  background-color: #60CEFF;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -35,7 +35,7 @@ nav #brand {
 }
 
 .cards {
-  flex: 1;
+  height: 50%;
   background-color: #EEE;
 }
 
@@ -50,8 +50,30 @@ nav #brand {
   align-self: center;
 }
 
+#nomore {
+  display: none;
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+}
+
+.instructions {
+  text-align: center;
+  margin-top: 4%;
+}
+
+.instructions p {
+  margin: 0;
+  text-align: center;
+  font-family: 'Mukta', sans-serif;
+  font-size: 1.15em;
+  font-weight: 600;
+}
+
 .modal {
-  font-family: 'Muktal', sans-serif;
+  font-family: 'Mukta', sans-serif;
   font-weight: 300;
   text-align: center;
   box-shadow: 0 0 10px black;

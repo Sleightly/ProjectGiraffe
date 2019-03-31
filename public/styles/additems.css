@@ -1,0 +1,87 @@
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+nav {
+  height: 60px;
+  background-color: #60CEFF;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 16px;
+  box-shadow: 0 0 10px black;
+  z-index: 999999;
+}
+
+nav img {
+  height: 100%;
+}
+
+nav div {
+  height: 60%;
+  margin: auto 0;
+}
+
+nav div a {
+  margin-right: 8px;
+}
+
+nav #brand {
+  height: 100%;
+}
+
+.photo {
+  padding: 10%;
+}
+
+.photo input {
+  margin-bottom: 10%;
+}
+
+.photo-preview {
+  height: 200px;
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.photo-preview img {
+  max-height: 100%;
+  max-width: 240px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.item-info {
+  padding: 10%;
+  flex: 1;
+}
+
+.item-info p {
+  font-family: 'Mukta', sans-serif;
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.item-info input {
+  border: 1px solid lightgray;
+  width: 70%;
+  margin-left: 4px;
+}
+
+button {
+  margin-left: auto;
+  margin-right: 10%;
+  margin-bottom: 10%;
+  font-size: 1.25em;
+  font-weight: 400;
+  font-family: 'Mukta', sans-serif;
+  background-color: #60CEFF;
+  border: none;
+  padding: 2% 4%;
+}

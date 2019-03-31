@@ -3,9 +3,23 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title></title>
+    <title>Swap - Direct Message</title>
+    <link rel="icon" href="images/icon.png">
     <link href="https://fonts.googleapis.com/css?family=Mukta:200,300,400,500,600,700,800" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles/dm.css">
+    <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyD-6L1HaTNNWgkzacsDiD2mhrOW5OCNsaE",
+        authDomain: "project-giraffe-4c1a9.firebaseapp.com",
+        databaseURL: "https://project-giraffe-4c1a9.firebaseio.com",
+        projectId: "project-giraffe-4c1a9",
+        storageBucket: "project-giraffe-4c1a9.appspot.com",
+        messagingSenderId: "836183447667"
+      };
+      firebase.initializeApp(config);
+    </script>
   </head>
   <body>
     <nav>
@@ -23,35 +37,39 @@
     </nav>
     <div class="dm">
       <div class="dm-head">
-        <h6>Honker Bonker</h6>
+        <h6 id="otherName"></h6>
       </div>
       <div class="dm-body">
-        <div class="speech-bubble-in">
-          <p>This is an incoming message</p>
-        </div>
-        <div class="speech-bubble-out">
-          <p>This is an outgoing message from me to the other person</p>
-        </div>
-        <div class="speech-bubble-in">
-          <p>This is an incoming message</p>
-        </div>
-        <div class="speech-bubble-out">
-          <p>This is an outgoing message from me to the other person</p>
-        </div>
-        <div class="speech-bubble-in">
-          <p>This is an incoming message</p>
-        </div>
-        <div class="speech-bubble-out">
-          <p>This is an outgoing message from me to the other person</p>
-        </div>
-        <div class="speech-bubble-in">
-          <p>This is an incoming message</p>
-        </div>
       </div>
       <div class="dm-foot">
-        <input type="text">
-        <button>Send</button>
+        <input type="text" id="msg">
+        <button onclick="sendMessage();">Send</button>
       </div>
     </div>
   </body>
+  <script type="text/javascript" src="scripts/chat.js"></script>
+  <script>
+
+    function sendMessage() {
+      saveMessage(document.getElementById('msg').value);
+      document.getElementById('msg').value = '';
+    }
+
+    window.onload = function(e){
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          authenticate();
+        } else {
+          window.location.href = 'index.html';
+        }
+      });
+    }
+
+    document.body.addEventListener('keyup', function(e) {
+      if(e.code === 13) {
+        console.log(e.code);
+        sendMessage();
+      }
+    })
+  </script>
 </html>

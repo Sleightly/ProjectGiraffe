@@ -7,8 +7,8 @@ body {
 }
 
 nav {
-  height: 60px;
-  background-color: #C4EDFF;
+  height: 65.95px;
+  background-color: #60CEFF;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -57,10 +57,18 @@ nav #brand {
 .dm-body {
   flex: 1;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
+  justify-content: flex-end;
   padding: 4% 0;
   margin-top: 4%;
   overflow-y: scroll;
+  font-family: 'Mukta', sans-serif;
+  font-size: 1em;
+}
+
+.dm-body p {
+  margin: 0;
+  padding: 2%;
 }
 
 .speech-bubble-in {

@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title></title>
+    <title>Swap</title>
+    <link rel="icon" href="images/icon.png">
     <link href="https://fonts.googleapis.com/css?family=Mukta:200,300,400,500,600,700,800" rel="stylesheet">
     <script src="js/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="styles/jTinder.css">
@@ -39,9 +40,14 @@
     <div class="cards">
       <!-- i used jTinder, i can easily populate the cards dynamically these are just placeholder, also you can take look, there are some callback functions available for if something is liked or disliked for y'all to store in the database-->
       <div id="tinderslide">
+        <p id="nomore">No More<br>To Browse</p>
         <ul id="tinderslideul">
         </ul>
       </div>
+    </div>
+    <div class="instructions">
+      <p>Swipe right to <span style="color: green;">like</span></p>
+      <p>Swipe left to <span style="color: crimson;">pass</span></p>
     </div>
     <div class="modal" style="display: none;">
       <h1>It's a match!</h1>
