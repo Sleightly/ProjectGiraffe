@@ -50,12 +50,14 @@
       <p id="right">Swipe Right to <span style="color: green;">LIKE <i class="fas fa-heart"></i></span></p><br>
       <p id="left">Swipe Left to <span style="color: crimson;">PASS <i class="fas fa-times"></i></span></p>
     </div>
-    <div class="modal" style="display: none;">
-      <h1>It's a match!</h1>
-      <p>Socks and Spoon</p>
-      <div style="display: flex; flex-direction: row;">
-        <button>Keep Browsing</button>
-        <button>Start Chatting</button>
+    <div class="modal" id="modal" style="display: none;">
+      <div class="inner-modal">
+        <h1>It's a match!</h1>
+        <p>Socks and Spoon</p>
+        <div style="display: flex; flex-direction: row; justify-content: center;">
+          <button onclick="closeModal()">Keep Browsing</button>
+          <button onclick="chatWith()">Start Chatting</button>
+        </div>
       </div>
     </div>
     <script type="text/javascript" src="scripts/main.js"></script>
@@ -99,6 +101,17 @@
         itemArray.push(url);
       }
 
+      function closeModal() {
+        document.getElementsByClassName('modal')[0].style.display = 'none';
+      }
+
+      document.body.addEventListener('click', function temp(e) {
+        console.log('added');
+        if(e.target.id === 'modal') {
+          document.body.removeEventListener('click', temp);
+          closeModal();
+        }
+      })
 
     </script>
   </body>

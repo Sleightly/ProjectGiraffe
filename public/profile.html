@@ -45,7 +45,7 @@
         <p id="name"></p>
       </div>
       <div class="profile-info">
-        <p>Location: <span id="showLoc">92122</span><i onclick="editLoc()" class="fas fa-pencil-alt" id="editIcon"></i>
+        <p>Location: <span id="showLoc"></span><i onclick="editLoc()" class="fas fa-pencil-alt" id="editIcon"></i>
         <input type="text" maxlength="5" style="display: none;" id="editLoc"></p>
         <p>Interested in:
           <select>
@@ -68,9 +68,9 @@
       </div>
     </div>
     <script>
-
     firebase.auth().onAuthStateChanged(function(user) {
       if(user) {
+
         var photo = user.photoURL;
         var name = user.displayName;
         var location = getLocation();
@@ -95,7 +95,6 @@
           //   <i onclick="deleteItem(this.parent)" class="far fa-trash-alt"></i>
           // </div>
         }
-        console.log(items[0]);
       } else {
         window.location.href = 'index.html';
       }
@@ -108,6 +107,8 @@
 
       document.body.addEventListener('click', function temp(e) {
         if(e.target.id !== 'editLoc' && e.target.id !== 'editIcon') {
+          var newLoc = document.getElementById('editLoc').value;
+          updateLocation(newLoc);
           document.getElementById('showLoc').style.display = "inline";
           document.getElementById('editIcon').style.display = "inline";
           document.getElementById('editLoc').style.display = "none";
