@@ -21,23 +21,33 @@ function signIn() {
   var provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider)
     .then(function(result) {
-      if(!checkLoginExists(getUniqueId())) {
-        firebase.firestore().collection('users').add({
-          name: getUserName(),
-          profilePicUrl: getProfilePicUrl(),
-          email: getEmail(),
-          id: getUniqueId(),
-          preference: "miscellaneous",
-          zipcode: "00000"
-        })
-      }
-    }).then(function() {
-      if (firebase.auth().currentUser) {
+      checkLoginExists(getUniqueId());
+    });
+}
+
+function continueSignIn(exists) {
+  if(!exists) {
+    console.log('continuing');
+    var promise = firebase.firestore().collection('users').doc(getUserName()).set({
+      name: getUserName(),
+      profilePicUrl: getProfilePicUrl(),
+      email: getEmail(),
+      id: getUniqueId(),
+      preference: "miscellaneous",
+      zipcode: "00000"
+    });
+  }
+  if(promise) {
+    promise.then(function() {
+      if(firebase.auth().currentUser) {
         window.location.href = 'home.html';
       }
-    }).catch(function(error) {
-      console.error('Error sending profile information to Firebase Database', error);
-  });
+    });
+  } else {
+    if(firebase.auth().currentUser) {
+      window.location.href = 'home.html';
+    }
+  }
 }
 
 // Signs-out of Friendly Chat.
@@ -73,17 +83,15 @@ function isUserSignedIn() {
 
 // returns true if the login exists otherwise its false
 function checkLoginExists(id){
-  var result = -1;
   firebase.firestore().collection("users").where("id", "==", id)
       .get()
       .then(function(querySnapshot) {
-          querySnapshot.forEach(function(doc) {
-              // doc.data() is never undefined for query doc snapshots
-              result = doc.id;
-          });
+          if(querySnapshot.size > 0) {
+              continueSignIn(true);
+          }
+          continueSignIn(false);
       })
       .catch(function(error) {
           console.log("Error getting documents: ", error);
       });
-  return result!=-1;
 }
