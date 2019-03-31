@@ -20,12 +20,14 @@ function signIn() {
   // Sign in Firebase using popup auth and Google as the identity provider.
   var provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider).then(function(result) {
-    firebase.firestore().collection('users').add({
-      name: getUserName(),
-      profilePicUrl: getProfilePicUrl(),
-      email: getEmail(),
-      id: getUniqueId(),
-      preferences: []
+      if(!checkLoginExists(getUniqueId())){
+        firebase.firestore().collection('users').add(g{
+          name: getUserName(),
+          profilePicUrl: getProfilePicUrl(),
+          email: getEmail(),
+          id: getUniqueId(),
+          preferences: []
+      }
     }).then(function() {
       if (firebase.auth().currentUser) {
         window.location.href = 'home.html';
@@ -65,4 +67,21 @@ function getUniqueId() {
 // Returns true if a user is signed-in.
 function isUserSignedIn() {
   return !!firebase.auth().currentUser;
+}
+
+// returns true if the login exists otherwise its false
+function checkLoginExists(id){
+  var result = -1;
+  db.collection("users").where("id", "==", id)
+      .get()
+      .then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+              // doc.data() is never undefined for query doc snapshots
+              result = doc.id;
+          });
+      })
+      .catch(function(error) {
+          console.log("Error getting documents: ", error);
+      });
+  return result!=-1;
 }
