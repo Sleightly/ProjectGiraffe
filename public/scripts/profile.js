@@ -1,31 +1,46 @@
 function getLocation() {
   var user = getUserName();
   var name;
-  firebase.firestore().collection('users').doc(user)
+  firebase.firestore().collection('users').where("id", "==", user)
   .get()
   .then(function(doc) {
-    name = doc.data().location;
+  	if (doc.exists) {
+  		name = doc.data().location;
+  	} else {
+  		console.log('no location');
+  	}
   })
+  return name;
 }
 
 function getPreference() {
   var user = getUserName();
   var name;
-  firebase.firestore().collection('users').doc(user)
+  firebase.firestore().collection('users').where("id", "==", user)
   .get()
   .then(function(doc) {
-    name = doc.data().preferences;
+    if (doc.exists) {
+  		name = doc.data().preferences;
+  	} else {
+  		console.log('no preferences');
+  	}
   })
+  return name;
 }
 
 function getItems() {
   var user = getUserName();
   var name;
-  firebase.firestore().collection('users').doc(user)
+  firebase.firestore().collection('users').where("id", "==", user)
   .get()
   .then(function(doc) {
-    name = doc.data().ownedItems;
+    if (doc.exists) {
+  		name = doc.data().ownedItems;
+  	} else {
+  		console.log('no items');
+  	}
   })
+  return name;
 }
 
 function updateProfilePic(pic) {
@@ -37,53 +52,74 @@ function updateProfilePic(pic) {
 
 function updateName(newName) {
 	var user = getUserName();
-	firebase.firestore().collection('users').doc(user).update({
-		"name": newName
+	var name;
+	firebase.firestore().collection('users').where("id", "==", user)
+	.get()
+	.then(function(doc) {
+	if (doc.exists) {
+			doc.update({
+				"name": newName
+			}
+		}
 	})
 }
 
 function updateLocation(newLoc) {
 	var user = getUserName();
-	firebase.firestore().collection('users').doc(user).update({
-		"Location": newLoc
+	var name;
+	firebase.firestore().collection('users').where("id", "==", user)
+	.get()
+	.then(function(doc) {
+	if (doc.exists) {
+			doc.update({
+				"location": newLoc
+			}
+		}
 	})
 }
 
 function changePreferences(oldPrefs) {
 	var user = getUserName();
-	firebase.firestore().collection('users').doc(user).update({
-		preferences: currPref
+	var name;
+	firebase.firestore().collection('users').where("id", "==", user)
+	.get()
+	.then(function(doc) {
+	if (doc.exists) {
+			doc.update({
+				"preferences": currPref
+			}
+		}
 	})
 }
 
 function addOwnedItems(item) {
 	var user = getUserName();
 	var cItems;
-	firebase.firestore().collection('users').doc(user).get()
+	firebase.firestore().collection('users').where("id", "==", user).get()
       .then(function(doc) {
         cItems = doc.data().ownedItems;
+        cItems = cItems.push(item);
+        doc.update({
+			ownedItems: cItems
+		})
       })
-    cItems = cItems.push(item);
-	firebase.firestore().collection('users').doc(user).update({
-		ownedItems: cItems
-	})
 }
 
 function removeOwnedItems(item) {
 	var user = getUserName();
 	var cItems;
-	firebase.firestore().collection('users').doc(user).get()
-      .then(function(doc) {
+	firebase.firestore().collection('users').where("id", "==", user).get()
+    .then(function(doc) {
         cItems = doc.data().ownedItems;
-      })
-    var index = cItems.indexOf(item);
-	if (index !== -1) cItems.splice(index, 1);
-	firebase.firestore().collection('users').doc(user).update({
-		ownedItems: cItems
-	})
+        var index = cItems.indexOf(item);
+		if (index !== -1) cItems.splice(index, 1);
+		doc.update({
+			ownedItems: cItems
+		})
+    })
 }
 
 // Returns the signed-in user's display name.
 function getUserName() {
-  return firebase.auth().currentUser.displayName;
+  return firebase.auth().currentUser.uid;
 }
