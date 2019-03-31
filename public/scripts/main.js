@@ -27,7 +27,8 @@ function signIn() {
           profilePicUrl: getProfilePicUrl(),
           email: getEmail(),
           id: getUniqueId(),
-          preference: "miscellaneous"
+          preference: "miscellaneous",
+          zipcodes: "00000"
         })
       }
     }).then(function() {
