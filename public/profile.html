@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Mukta:200,300,400,500,600,700,800" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles/profile.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script src="scripts/profile.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
     <script>
       // Initialize Firebase
@@ -29,10 +30,10 @@
       </a>
       <div>
         <a href="message.html">
-          <img src="images/message.svg">
+          <img src="images/message.png">
         </a>
         <a href="profile.html">
-          <img src="images/profile.svg" style="background-color: rgba(255, 255, 255, 0.8); border-radius: 25%;">
+          <img src="images/profile.png" style="background-color: rgba(255, 255, 255, 0.8); border-radius: 25%;">
         </a>
       </div>
     </nav>
@@ -55,7 +56,7 @@
             <option>Food</option>
             <option>Furniture</option>
             <option>Vehicles</option>
-            <option>Anything</option>
+            <option>Miscellaneous</option>
           </select>
         </p>
       </div>
@@ -63,13 +64,8 @@
         <p>Current Offers</p>
         <i onclick="addItem()" class="fas fa-plus"></i>
       </div>
-      <!--<div class="for-trade-items">
-        <div class="for-trade-item">
-          <img>
-          <p>A spoon</p>
-          <i onclick="deleteItem(this.parent)" class="far fa-trash-alt"></i>
-        </div>
-      </div>-->
+      <div class="for-trade-items">
+      </div>
     </div>
     <script>
 
@@ -77,8 +73,29 @@
       if(user) {
         var photo = user.photoURL;
         var name = user.displayName;
+        var location = getLocation();
+        var preference = getPreference();
+        var items = getItems();
         document.getElementById('profPic').src = photo;
         document.getElementById('name').innerText = name;
+        document.getElementById('showLoc').innerText = location;
+
+        var options = document.getElementsByTagName('option');
+        for(var i = 0; i < options.length; i++) {
+          if(options[i].value === preference) {
+            options[i].selected = 'selected';
+            break;
+          }
+        }
+
+        for(var i = 0; i < items.length; i++) {
+          // <div class="for-trade-item">
+          //   <img>
+          //   <p>A spoon</p>
+          //   <i onclick="deleteItem(this.parent)" class="far fa-trash-alt"></i>
+          // </div>
+        }
+        console.log(items[0]);
       } else {
         window.location.href = 'index.html';
       }

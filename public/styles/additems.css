@@ -28,6 +28,7 @@ nav div {
 
 nav div a {
   margin-right: 8px;
+  text-decoration: none;
 }
 
 nav #brand {

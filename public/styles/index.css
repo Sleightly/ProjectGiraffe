@@ -23,8 +23,8 @@ body::before {
 }
 
 nav {
-  background-color: #D8F2FF;
-  padding: 4% 0;
+  background-image: linear-gradient(to bottom right, #DBF7FF, #99DFFF);
+  padding: 2% 0;
   box-shadow: 0 0 10px black;
 }
 
@@ -51,7 +51,7 @@ nav img {
 
 .button-div {
   padding: 15% 0;
-  background-color: #D8F2FF;
+  background-image: linear-gradient(to bottom right, #99DFFF, #81CFF9);
   box-shadow: 0 0 10px black;
 }
 
@@ -65,8 +65,10 @@ nav img {
   padding: 8px 16px;
   font-size: 1.25em;
   border: 3px solid #AAA;
-  border-bottom: 3px solid #333;
-  border-right: 3px solid #333;
+  border-bottom: 2px solid #333;
+  border-right: 2px solid #333;
+  font-family: 'Mukta', sans-serif;
+  font-weight: 200;
 }
 
 #login:active {

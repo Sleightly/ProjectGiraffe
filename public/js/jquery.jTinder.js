@@ -211,7 +211,6 @@ function checkMatched(otherId, currUserId) {
 
 $("#tinderslide").jTinder({
     onDislike: function (item) {
-        alert('Dislike image ' + (item.index()+1));
     },
     onLike: function (item) {
         wantItem(items[parseInt(item.attr('class').split('e')[1]) - 1]);
@@ -241,9 +240,13 @@ function wantItem(itemUrl) {
 				}, 100000);
 			});
 		})
+<<<<<<< HEAD
 	}).then(function() { 
 		console.log("result..");
 		console.log(matched);
+=======
+	}).then(function() {
+>>>>>>> bf5f363cc05f32f7dca53149c37c325dcc9ceaef
 			ref.where("id", "==", firebase.auth().currentUser.uid).get().then(function(querySnapshot) {
 				querySnapshot.forEach(function(doc) {
 					//console.log(firebase.firestore().collection('users').doc(doc.id).collection('matches').collectionGroup);

@@ -28,10 +28,36 @@ nav div {
 
 nav div a {
   margin-right: 8px;
+  text-decoration: none;
 }
 
 nav #brand {
   height: 100%;
+}
+
+.new-matches-header p {
+  color: white;
+  background-color: #FF9EF6;
+  margin: 0;
+  padding: 1% 2%;
+  font-family: 'Mukta', sans-serif;
+  font-weight: 600;
+}
+
+.new-matches {
+  display: flex;
+  flex-direction: row;
+  overflow: scroll;
+  height: 150px;
+  padding: 0 10%;
+}
+
+.new-matches img {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  box-shadow: 0 0 5px gray;
+  margin: auto 4%;
 }
 
 .message {
@@ -39,6 +65,7 @@ nav #brand {
   flex-direction: row;
   align-items: center;
   height: 100px;
+  padding: 0 4%;
   border-top: 1px solid gray;
   border-bottom: 1px solid gray;
 }

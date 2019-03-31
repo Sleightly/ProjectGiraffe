@@ -28,6 +28,7 @@ nav div {
 
 nav div a {
   margin-right: 8px;
+  text-decoration: none;
 }
 
 nav #brand {
@@ -54,8 +55,9 @@ nav #brand {
   display: none;
   position: absolute;
   z-index: 0;
-  top: 50%;
+  top: 40%;
   width: 100%;
+  font-family: 'Mukta', sans-serif;
   text-align: center;
 }
 
@@ -65,10 +67,27 @@ nav #brand {
 }
 
 .instructions p {
+  position: relative;
   margin: 0;
-  text-align: center;
+  display: inline-block;
+  margin: 0 auto;
   font-family: 'Mukta', sans-serif;
   font-size: 1.15em;
+  font-weight: 400;
+  animation-duration: 4s;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+}
+
+#right {
+  animation-name: slideRight;
+}
+
+#left {
+  animation-name: slideLeft;
+}
+
+.instructions p span {
   font-weight: 600;
 }
 
@@ -85,4 +104,14 @@ nav #brand {
   left: 50%;
   transform: translate(-100px, -100px);
   z-index: 999999999;
+}
+
+@keyframes slideRight {
+  from {left: 0%;}
+  to {left: 10%};
+}
+
+@keyframes slideLeft {
+  from {right: 0%;}
+  to {right: 10%;}
 }
