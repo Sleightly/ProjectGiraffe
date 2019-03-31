@@ -67,12 +67,12 @@
       var ref = firebase.firestore().collection("items")
         .get()
         .then(function(querySnapshot) {
-          var i = 1;
-          querySnapshot.forEach(function(doc) {
+          var order = matchingMapGeneration(getUniqueId());
+          for(var i = 0; i<order.length; i++){
+            doc = firebase.firestore().collection("items").where('id','=',order[i]).get();
             createCard(doc.data(), i);
             addItem(doc.data().imageUrl);
-            i++;
-          });
+          }
         }).then(function() {
           var script = document.createElement('script'),
           scripts = document.getElementsByTagName('script')[0];

@@ -14,6 +14,25 @@ function passArray(itemArray) {
 	items = itemArray;
 }
 
+// returns true if the two have not been matched yet
+function notMatched(otherId, currId){
+  	var result = -1;
+  	firebase.firestore().collection("users")
+  		.where("id", "==", currId)
+		.collection("potentialBuyers")
+		.where("matchedWith", "==", "otherId")
+      	.then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+              return doc.empty == false;
+              //result = doc.id;
+          });
+      })
+      .catch(function(error) {
+          console.log("Error getting documents: ", error);
+      });
+  return doc.empty == true;
+}
+
 function checkMatched(otherId, currUserId) {
 	//console.log("here!");
 	//console.log(otherId);
@@ -28,32 +47,25 @@ function checkMatched(otherId, currUserId) {
 				//console.log(query);
 				if (query.empty == false) {
 					$('#modal').css('display', 'block');
-					console.log("IT'S A MATCH GOSH.")
-					if (firebase.firestore().collection('users').doc(doc.id).collection('potentialBuyers').collectionGroup == undefined) {
-						firebase.firestore().collection('users').doc(doc.id).collection('potentialBuyers').add({
-							matchedWith: currUserId
-						}).then(function() {
-							ref.where("id", "==", currUserId).get().then(function(querySnapshot) {
-								querySnapshot.forEach(function(doc2) {
-									firebase.firestore().collection('users').doc(doc2.id).collection('potentialBuyers').add ({
-										matchedWith: otherId
+					if (notMatched() == true) {
+							firebase.firestore().collection('users').doc(doc.id).collection('potentialBuyers').add({
+								matchedWith: currUserId
+							}).then(function() {
+								ref.where("id", "==", currUserId).get().then(function(querySnapshot) {
+									querySnapshot.forEach(function(doc2) {
+										firebase.firestore().collection('users').doc(doc2.id).collection('potentialBuyers').add ({
+											matchedWith: otherId
+										})
 									})
 								})
-							})
-						});
-					} else {
-					
+							});
 					}
-;					//console.log("not empty...")
 					return true;
 				}
 			})
 		return false;
 		})
 	})
-	//check otherUserId's matches to see if any of them have the currUserId
-	//if so, then... print something?
-	//if not? okay.
 }
 
 ;(function ($, window, document, undefined) {
