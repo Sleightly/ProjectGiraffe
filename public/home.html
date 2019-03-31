@@ -59,12 +59,14 @@
     </div>
     <script type="text/javascript" src="scripts/main.js"></script>
     <script>
-      var ref = firebase.firestore().collection("miscellaneous")
+      var itemArray = [];
+      var ref = firebase.firestore().collection("items")
         .get()
         .then(function(querySnapshot) {
           var i = 1;
           querySnapshot.forEach(function(doc) {
             createCard(doc.data(), i);
+            addItem(doc.data().imageUrl);
             i++;
           });
         }).then(function() {
@@ -77,7 +79,10 @@
           scripts = document.getElementsByTagName('script')[0];
           script.src = 'js/jquery.jTinder.js';
           scripts.parentNode.insertBefore(script, scripts);
-          document.getElementById('nomore').style.display = "block";
+        }).then(function() {
+          setTimeout(function() {
+            passArray(itemArray);
+          }, 600);
         })
         .catch(function(error) {
           console.log("Error getting documents: ", error);
@@ -89,6 +94,12 @@
 
         document.getElementById('tinderslideul').innerHTML += elem;
       }
+
+      function addItem(url) {
+        itemArray.push(url);
+      }
+
+
     </script>
   </body>
 </html>
