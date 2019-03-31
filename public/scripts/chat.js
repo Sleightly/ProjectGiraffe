@@ -34,26 +34,30 @@ function authenticate() {
     var name;
 		firebase.firestore().collection('users').where("id", "==", user2)
       .get()
-      .then(function(doc) {
-        if (doc.exists) {
-          name = doc.data().name;
-        } else {
-          console.log('no name');
-        }
+      .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          if (doc.exists) {
+            name = doc.data().name;
+            document.getElementById("otherName").innerText = name;
+          } else {
+            console.log('no name');
+          }
+        })
       })
-		document.getElementById("otherName").innerText = name;
 	} else {
     var name;
-		firebase.firestore().collection('users').where("id", "==", user1)
+    firebase.firestore().collection('users').where("id", "==", user1)
       .get()
-      .then(function(doc) {
-        if (doc.exists) {
-          name = doc.data().name;
-        } else {
-          console.log('no name');
-        }
+      .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          if (doc.exists) {
+            name = doc.data().name;
+            document.getElementById("otherName").innerText = name;
+          } else {
+            console.log('no name');
+          }
+        })
       })
-		document.getElementById("otherName").innerText = name;
 	}
   loadMessages();
 }

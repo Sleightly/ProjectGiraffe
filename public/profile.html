@@ -88,13 +88,13 @@
           }
         }
 
-        for(var i = 0; i < items.length; i++) {
+        //for(var i = 0; i < items.length; i++) {
           // <div class="for-trade-item">
           //   <img>
           //   <p>A spoon</p>
           //   <i onclick="deleteItem(this.parent)" class="far fa-trash-alt"></i>
           // </div>
-        }
+        //}
       } else {
         window.location.href = 'index.html';
       }
@@ -108,7 +108,10 @@
       document.body.addEventListener('click', function temp(e) {
         if(e.target.id !== 'editLoc' && e.target.id !== 'editIcon') {
           var newLoc = document.getElementById('editLoc').value;
-          updateLocation(newLoc);
+          updateLocation(""+newLoc);
+          var location = getLocation();
+          console.log("ret : "+location);
+          document.getElementById('showLoc').innerText = location;
           document.getElementById('showLoc').style.display = "inline";
           document.getElementById('editIcon').style.display = "inline";
           document.getElementById('editLoc').style.display = "none";

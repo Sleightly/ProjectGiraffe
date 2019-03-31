@@ -1,17 +1,29 @@
 function getLocation() {
   var user = getUserName();
+  console.log(user)
   var name;
   firebase.firestore().collection('users').where("id", "==", user)
   .get()
   .then(function(doc) {
-    if(doc.exists) {
-      console.log("TWIC?");
+    if (doc.exists) {
       name = doc.data().zipcode;
     } else {
-      console.log('no zipcode');
+      console.log('no xd');
     }
   })
   return name;
+  /*.get()
+  .then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      if (doc.data().id == user) {
+        name = doc.data().zipcode;
+        console.log("name:  "+name)
+        return name;
+      } else {
+        console.log('no loc');
+      }
+    })
+  })*/
 }
 
 function getPreference() {
@@ -67,9 +79,18 @@ function updateName(newName) {
 
 function updateLocation(newLoc) {
 	var user = getUserName();
-	firebase.firestore().collection('users').doc(user).update({
-		"zipcode": newLoc
-	})
+  console.log(user)
+	firebase.firestore().collection('users')
+  .get()
+  .then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      if (doc.data().id == user) {
+         doc.ref.update({ zipcode: newLoc })
+      } else {
+        console.log('no loc');
+      }
+    })
+  })
 }
 
 function changePreferences(oldPrefs) {
