@@ -9,7 +9,7 @@ function uploadPhoto(pic, title, type, user) {
     setTimeout(function() {
     	firebase.firestore().collection('items').add({
     		title: title,
-    		types: type,
+    		type: type,
     		userId: user,
     		imageUrl: url
     	})

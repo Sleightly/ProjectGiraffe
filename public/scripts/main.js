@@ -27,7 +27,7 @@ function signIn() {
           profilePicUrl: getProfilePicUrl(),
           email: getEmail(),
           id: getUniqueId(),
-          preferences: []
+          preference: "miscellaneous"
         })
       }
     }).then(function() {

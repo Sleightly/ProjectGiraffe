@@ -27,7 +27,7 @@ function checkMatched(otherId, currUserId) {
 				//console.log("query coming up!");
 				//console.log(query);
 				if (query.empty == false) {
-					$('modal').css('display', 'block');
+					$('#modal').css('display', 'block');
 					console.log("IT'S A MATCH GOSH.")
 ;					//console.log("not empty...")
 					return true;
