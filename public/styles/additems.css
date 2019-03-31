@@ -92,3 +92,20 @@ button {
   border: none;
   padding: 2% 4%;
 }
+
+#modal {
+  display: none;
+  background-color: white;
+  box-shadow: 0 0 5px black;
+  position: absolute;
+  top: calc(50% - 50px);
+  left: calc(50% - 50px);
+  height: 100px;
+  width: 100px;
+}
+
+#modal p {
+  font-size: 1.5em;
+  text-align: center;
+  padding: 2%;
+}
