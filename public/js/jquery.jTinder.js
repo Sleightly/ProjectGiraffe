@@ -10,6 +10,9 @@
 var items = [];
 var currIdx = 0;
 
+var _user;
+var _other;
+
 function passArray(itemArray) {
 	items = itemArray;
 }
@@ -17,8 +20,7 @@ function passArray(itemArray) {
 // returns true if the two have not been matched yet
 function notMatched(otherId, currId){
   	var result = -1;
-  	firebase.firestore().collection("users")
-  		.where("id", "==", currId)
+  	firebase.firestore().collection("users").where("id", "==", currId)
 		.collection("potentialBuyers")
 		.where("matchedWith", "==", "otherId")
       	.then(function(querySnapshot) {
@@ -47,19 +49,42 @@ function checkMatched(otherId, currUserId) {
 				//console.log(query);
 				if (query.empty == false) {
 					$('#modal').css('display', 'block');
-					if (notMatched() == true) {
-							firebase.firestore().collection('users').doc(doc.id).collection('potentialBuyers').add({
-								matchedWith: currUserId
-							}).then(function() {
-								ref.where("id", "==", currUserId).get().then(function(querySnapshot) {
-									querySnapshot.forEach(function(doc2) {
-										firebase.firestore().collection('users').doc(doc2.id).collection('potentialBuyers').add ({
-											matchedWith: otherId
-										})
-									})
+          var img1 = document.getElementById('pic1');
+          var img2 = document.getElementById('pic2');
+          var display1 = document.getElementById('txt1');
+          var display2 = document.getElementById('txt2');
+          var prof1, prof2, name1, name2;
+          var p1 = firebase.firestore().collection('users').where('id', '==', currUserId)
+            .get().then(function(querySnapshot) {
+              if(querySnapshot.size > 0) {
+                prof1 = querySnapshot.docs[0].data().profilePicUrl;
+                name1 = querySnapshot.docs[0].data().name.split(" ")[0];
+              }
+            });
+          var p2 = firebase.firestore().collection('users').where('id', '==', otherId)
+            .get().then(function(querySnapshot) {
+              if(querySnapshot.size > 0) {
+                prof2 = querySnapshot.docs[0].data().profilePicUrl;
+                name2 = querySnapshot.docs[0].data().name.split(" ")[0];
+              }
+            });
+          Promise.all([p1, p2]).then(function() {
+            img1.src = prof1;
+            img2.src = prof2;
+            display1.innerText = name1;
+            display2.innerText = name2;
+          });
+					firebase.firestore().collection('users').doc(doc.id).collection('potentialBuyers').add({
+						matchedWith: currUserId
+					}).then(function() {
+						ref.where("id", "==", currUserId).get().then(function(querySnapshot) {
+							querySnapshot.forEach(function(doc2) {
+								firebase.firestore().collection('users').doc(doc2.id).collection('potentialBuyers').add ({
+									matchedWith: otherId
 								})
-							});
-					}
+							})
+						})
+					});
 					return true;
 				}
 			})
@@ -263,6 +288,8 @@ function wantItem(itemUrl) {
 			//console.log("hello");
 			firebase.firestore().collection('items').doc(itemDoc.id).get().then(function(moreItem) {
 				otherUserId = moreItem.data().userId;
+        _other = otherUserId;
+        _user = firebase.auth().currentUser.uid;
 				matched = checkMatched(otherUserId, firebase.auth().currentUser.uid);
 			});
 		})
@@ -295,9 +322,10 @@ function wantItem(itemUrl) {
 				currIdx += 1;
 			})
     })
-    .then(function() {
-      window.location.href = "dm.html?p1="+firebase.auth().currentUser.uid+"&p2="+otherUserId;
-    })
   }
+
+function chat() {
+  window.location.href = "dm.html?p1=" + _user + "&p2=" + _other;
+}
 
 $('#tinderslide').jTinder();
