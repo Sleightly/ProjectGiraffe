@@ -74,7 +74,6 @@
         var photo = user.photoURL;
         var name = user.displayName;
         var location = getLocation();
-        console.log(location)
         var preference = getPreference();
         var items = getItems();
         document.getElementById('profPic').src = photo;
@@ -109,9 +108,10 @@
       document.body.addEventListener('click', function temp(e) {
         if(e.target.id !== 'editLoc' && e.target.id !== 'editIcon') {
           var newLoc = document.getElementById('editLoc').value;
-          console.log("UPDATING LOC")
-          console.log(newLoc)
           updateLocation(""+newLoc);
+          var location = getLocation();
+          console.log("ret : "+location);
+          document.getElementById('showLoc').innerText = location;
           document.getElementById('showLoc').style.display = "inline";
           document.getElementById('editIcon').style.display = "inline";
           document.getElementById('editLoc').style.display = "none";

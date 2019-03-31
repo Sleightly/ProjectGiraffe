@@ -1,21 +1,29 @@
 function getLocation() {
   var user = getUserName();
+  console.log(user)
   var name;
-  firebase.firestore().collection('users')
+  firebase.firestore().collection('users').where("id", "==", user)
   .get()
+  .then(function(doc) {
+    if (doc.exists) {
+      name = doc.data().zipcode;
+    } else {
+      console.log('no xd');
+    }
+  })
+  return name;
+  /*.get()
   .then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
       if (doc.data().id == user) {
         name = doc.data().zipcode;
         console.log("name:  "+name)
+        return name;
       } else {
         console.log('no loc');
       }
     })
-  })
-  console.log("I AM HERE")
-  console.log(name);
-  return name;
+  })*/
 }
 
 function getPreference() {
