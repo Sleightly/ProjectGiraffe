@@ -60,34 +60,48 @@
         </div>
       </div>
     </div>
-    <script type="text/javascript" src="scripts/main.js"></script>
     <script type="text/javascript" src="scripts/matching.js"></script>
+    <script type="text/javascript" src="scripts/main.js"></script>
     <script>
       var itemArray = [];
+      var order;
       var ref = firebase.firestore().collection("items")
         .get()
         .then(function(querySnapshot) {
-          var order = matchingMapGeneration(getUniqueId());
-          for(var i = 0; i<order.length; i++){
-            doc = firebase.firestore().collection("items").where('id','=',order[i]).get();
-            createCard(doc.data(), i);
-            addItem(doc.data().imageUrl);
-          }
-        }).then(function() {
-          var script = document.createElement('script'),
-          scripts = document.getElementsByTagName('script')[0];
-          script.src = 'js/jquery.transform2d.js';
-          scripts.parentNode.insertBefore(script, scripts);
-        }).then(function() {
-          var script = document.createElement('script'),
-          scripts = document.getElementsByTagName('script')[0];
-          script.src = 'js/jquery.jTinder.js';
-          scripts.parentNode.insertBefore(script, scripts);
-          document.getElementById('nomore').style.display = 'block';
-        }).then(function() {
-          setTimeout(function() {
-            passArray(itemArray);
-          }, 600);
+          var temp = matchingMapGeneration(getUniqueId());
+          temp.then(function(ret) {
+            order = ret;
+            console.log('this is ret');
+            console.log(ret[0]);
+            for(var i = 0; i<order.length; i++){ firebase.firestore().collection("items").where('userId','==',order[i]).get()
+              .then(function(querySnapshot) {
+                console.log('here?');
+                if(querySnapshot.size > 0) {
+                  console.log('did it go');
+                  createCard(querySnapshot.docs[0].data(), i);
+                  addItem(querySnapshot.docs[0].data().imageUrl);
+                }
+              })
+              .then(function() {
+                var script = document.createElement('script'),
+                scripts = document.getElementsByTagName('script')[0];
+                script.src = 'js/jquery.transform2d.js';
+                scripts.parentNode.insertBefore(script, scripts);
+              }).then(function() {
+                var script = document.createElement('script'),
+                scripts = document.getElementsByTagName('script')[0];
+                script.src = 'js/jquery.jTinder.js';
+                scripts.parentNode.insertBefore(script, scripts);
+                document.getElementById('nomore').style.display = 'block';
+              }).then(function() {
+                setTimeout(function() {
+                  passArray(itemArray);
+                }, 600);
+              })
+            }
+          }).catch(function(e) {
+            console.log(e);
+          })
         })
         .catch(function(error) {
           console.log("Error getting documents: ", error);
