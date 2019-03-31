@@ -105,8 +105,8 @@ function matchingMapGeneration(mId){
     });
   }
   var order = [];
-  for (int i =0; i< scores.size; i++ ){
-    int max = 0;
+  for (var i = 0; i< scores.size; i++ ){
+    var max = 0;
     for (const k of scores.keys()) {
       if(scores[max]<scores[k]){
         max = k;
