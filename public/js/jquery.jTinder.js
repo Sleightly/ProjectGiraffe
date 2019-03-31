@@ -30,23 +30,15 @@ function notMatched(otherId, currId){
           });
       })
       .catch(function(error) {
-          console.log("Error getting documents: ", error);
       });
   return doc.empty == true;
 }
 
 function checkMatched(otherId, currUserId) {
-	//console.log("here!");
-	//console.log(otherId);
-	//console.log(currUserId);
 	var ref = firebase.firestore().collection('users');
 	ref.where("id", "==", otherId).get().then(function(querySnap) {
-		//console.log(querySnap);
 		querySnap.forEach(function(doc) {
-			//console.log(doc.id);
 			firebase.firestore().collection('users').doc(doc.id).collection('matches').where("belongs", "==", currUserId).get().then(function(query) {
-				//console.log("query coming up!");
-				//console.log(query);
 				if (query.empty == false) {
 					$('#modal').css('display', 'block');
           var img1 = document.getElementById('pic1');
@@ -277,7 +269,6 @@ $("#tinderslide").jTinder({
 });
 
 function wantItem(itemUrl) {
-	//console.log(itemRef.imageUrl);
 	var matched;
 	var ref = firebase.firestore().collection('users');
 	var itemRef = firebase.firestore().collection('items');
@@ -285,7 +276,6 @@ function wantItem(itemUrl) {
 	// Get the current user's matches array and add item
 	itemRef.where("imageUrl", "==", itemUrl).get().then(function(item) {
 		item.forEach(function(itemDoc) {
-			//console.log("hello");
 			firebase.firestore().collection('items').doc(itemDoc.id).get().then(function(moreItem) {
 				otherUserId = moreItem.data().userId;
         _other = otherUserId;
@@ -296,7 +286,6 @@ function wantItem(itemUrl) {
 	}).then(function() {
 			ref.where("id", "==", firebase.auth().currentUser.uid).get().then(function(querySnapshot) {
 				querySnapshot.forEach(function(doc) {
-					//console.log(firebase.firestore().collection('users').doc(doc.id).collection('matches').collectionGroup);
 					if (firebase.firestore().collection('users').doc(doc.id).collection('matches').collectionGroup == undefined) {
 						firebase.firestore().collection('users').doc(doc.id).collection('matches').add({
 							currIdx: itemUrl,

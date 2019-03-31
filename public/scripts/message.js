@@ -11,18 +11,14 @@ function getMatches() {
 		querySnapshot.forEach(function(doc) {
 			if (doc.data().matchedWith != firebase.auth().currentUser.uid){
 				matches.add(doc.data().matchedWith)
-        console.log(matches);
 			}
 		})
-		console.log(matches);
 		let array = Array.from(matches);
 		var ppl = document.getElementsByClassName('ppl')[0];
 
 		//create chat rooms here
 		var i;
 		for (i = 0; i < array.length; i++) {
-      console.log(array);
-      console.log(array[i]);
 			var msgs = document.createElement('div');
 			var image = document.createElement("img")
 			var textDiv = document.createElement('div');
@@ -44,7 +40,6 @@ function getMatches() {
       textDiv.appendChild(msg);
 			msgs.appendChild(image)
 			msgs.appendChild(textDiv)
-			console.log("O BOY STUFF")
 			ppl.insertBefore(msgs, ppl.firstChild);
 		}i
 		//dont worry about duplicates, if already matched, then won't be added

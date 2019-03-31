@@ -27,7 +27,6 @@ function signIn() {
 
 function continueSignIn(exists) {
   if(!exists) {
-    console.log('continuing');
     var promise = firebase.firestore().collection('users').doc(getUserName()).set({
       name: getUserName(),
       profilePicUrl: getProfilePicUrl(),
@@ -92,6 +91,5 @@ function checkLoginExists(id){
           continueSignIn(false);
       })
       .catch(function(error) {
-          console.log("Error getting documents: ", error);
       });
 }

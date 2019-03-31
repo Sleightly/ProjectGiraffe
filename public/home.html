@@ -75,8 +75,6 @@
           var temp = matchingMapGeneration(getUniqueId());
           temp.then(function(ret) {
             order = ret;
-            console.log('this is ret');
-            console.log(ret[0]);
             for(var i = 0; i<order.length; i++){ firebase.firestore().collection("items").where('imageUrl','==',order[i]).get()
               .then(function(querySnapshot) {
                 createCard(querySnapshot.docs[0].data(), i);
@@ -100,11 +98,9 @@
               })
             }
           }).catch(function(e) {
-            console.log(e);
           })
         })
         .catch(function(error) {
-          console.log("Error getting documents: ", error);
         });
 
         function createCard(item, num) {
@@ -121,7 +117,6 @@
         }
 
         document.body.addEventListener('click', function temp(e) {
-          console.log('added');
           if(e.target.id === 'modal') {
             document.body.removeEventListener('click', temp);
             closeModal();

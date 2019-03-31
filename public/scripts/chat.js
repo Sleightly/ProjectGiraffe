@@ -23,8 +23,6 @@ function getUrlVar(name) {
 function authenticate() {
 	var user1 = getUrlVar('p1');
 	var user2 = getUrlVar('p2');
-  console.log(user1)
-  console.log(user2)
 	var myid = getUniqueId();
 	if (myid != user1 && myid != user2) {
 		window.location.href = 'home.html';
@@ -40,7 +38,6 @@ function authenticate() {
             name = doc.data().name;
             document.getElementById("otherName").innerText = name;
           } else {
-            console.log('no name');
           }
         })
       })
@@ -54,7 +51,6 @@ function authenticate() {
             name = doc.data().name;
             document.getElementById("otherName").innerText = name;
           } else {
-            console.log('no name');
           }
         })
       })
@@ -65,7 +61,6 @@ function authenticate() {
 
 // Saves a new message on the Cloud Firestore.
 function saveMessage(messageText) {
-  console.log("save message")
   var myid = getUniqueId();
   var user1 = getUrlVar('p1');
   var user2 = getUrlVar('p2');
@@ -84,13 +79,11 @@ function saveMessage(messageText) {
     text: messageText,
     timestamp: firebase.firestore.FieldValue.serverTimestamp()
   }).catch(function(error) {
-    console.error('Error writing new message to Firebase Database', error);
   });
 }
 
 // Loads chat messages history and listens for upcoming ones.
 function loadMessages() {
-  console.log('Load message')
   var user1 = getUrlVar('p1');
   var user2 = getUrlVar('p2');
   var uniqueId = getId(user1, user2);
@@ -116,7 +109,6 @@ function loadMessages() {
 }
 
 function displayMessage(message, bool) {
-  console.log("display message")
   var user1 = getUrlVar('p1');
   var user2 = getUrlVar('p2');
 

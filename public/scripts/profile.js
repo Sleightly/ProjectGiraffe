@@ -113,7 +113,6 @@ function deleteItem(item) {
     firebase.firestore().collection('items').doc(doc.id).delete().then(function() {
       item.parentElement.parentNode.removeChild(item.parentElement);
     }).catch(function(error) {
-      console.error("Error removing document: ", error);
     });
   })
 }
