@@ -58,7 +58,6 @@
 
     window.onload = function(e){
       firebase.auth().onAuthStateChanged(function(user) {
-        console.log(user);
         if (user) {
           authenticate();
         } else {
