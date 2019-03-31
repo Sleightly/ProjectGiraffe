@@ -5,8 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title></title>
     <link href="https://fonts.googleapis.com/css?family=Mukta:200,300,400,500,600,700,800" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="styles/jTinder.css">
     <link rel="stylesheet" type="text/css" href="styles/home.css">
+    <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyD-6L1HaTNNWgkzacsDiD2mhrOW5OCNsaE",
+        authDomain: "project-giraffe-4c1a9.firebaseapp.com",
+        databaseURL: "https://project-giraffe-4c1a9.firebaseio.com",
+        projectId: "project-giraffe-4c1a9",
+        storageBucket: "project-giraffe-4c1a9.appspot.com",
+        messagingSenderId: "836183447667"
+      };
+      firebase.initializeApp(config);
+    </script>
   </head>
   <body>
     <nav>
@@ -25,10 +39,7 @@
     <div class="cards">
       <!-- i used jTinder, i can easily populate the cards dynamically these are just placeholder, also you can take look, there are some callback functions available for if something is liked or disliked for y'all to store in the database-->
       <div id="tinderslide">
-        <ul>
-          <li class="pane1"><div class="img"></div><div>Books</div><div class="like"></div><div class="dislike"></div></li>
-          <li class="pane2"><div class="img"></div><div>Shirt</div><div class="like"></div><div class="dislike"></div></li>
-          <li class="pane3"><div class="img"></div><div>Spoon</div><div class="like"></div><div class="dislike"></div></li>
+        <ul id="tinderslideul">
         </ul>
       </div>
     </div>
@@ -41,13 +52,48 @@
       </div>
     </div>
     <script type="text/javascript" src="scripts/main.js"></script>
-    <!-- jQuery lib -->
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <!-- transform2d lib -->
-    <script type="text/javascript" src="js/jquery.transform2d.js"></script>
-    <!-- jTinder lib -->
-    <script type="text/javascript" src="js/jquery.jTinder.js"></script>
-    <!-- jTinder initialization script -->
-    <script>$("#tinderslide").jTinder();</script>
+    <script>
+      var itemArray = [];
+      var ref = firebase.firestore().collection("items")
+        .get()
+        .then(function(querySnapshot) {
+          var i = 1;
+          querySnapshot.forEach(function(doc) {
+            createCard(doc.data(), i);
+            addItem(doc.data().imageUrl);
+            i++;
+          });
+        }).then(function() {
+          var script = document.createElement('script'),
+          scripts = document.getElementsByTagName('script')[0];
+          script.src = 'js/jquery.transform2d.js';
+          scripts.parentNode.insertBefore(script, scripts);
+        }).then(function() {
+          var script = document.createElement('script'),
+          scripts = document.getElementsByTagName('script')[0];
+          script.src = 'js/jquery.jTinder.js';
+          scripts.parentNode.insertBefore(script, scripts);
+        }).then(function() {
+          setTimeout(function() {
+            passArray(itemArray);
+          }, 600);
+        })
+        .catch(function(error) {
+          console.log("Error getting documents: ", error);
+        });
+
+      function createCard(item, num) {
+        var elem = `<li class="pane${num}"><div class="img" style="background: url('${item.imageUrl}') no-repeat scroll center center; background-size: cover;"></div><div>${item.title}</div><div class="like"></div><div class="dislike"></div></li>`;
+        console.log(item.imageUrl);
+
+        document.getElementById('tinderslideul').innerHTML += elem;
+      }
+
+      function addItem(url) {
+        itemArray.push(url);
+      }
+
+
+    </script>
   </body>
 </html>

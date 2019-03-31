@@ -7,6 +7,13 @@
  * Licensed under GPL Version 2.
  * https://github.com/do-web/jTinder/blob/master/LICENSE
  */
+var items = [];
+var currIdx = 0;
+
+function passArray(itemArray) {
+	items = itemArray;
+}
+
 ;(function ($, window, document, undefined) {
 	var pluginName = "jTinder",
 		defaults = {
@@ -182,8 +189,7 @@ $("#tinderslide").jTinder({
         alert('Dislike image ' + (item.index()+1));
     },
     onLike: function (item) {
-        wantItem(item);
-		console.log("liked!");
+        wantItem(items[parseInt(item.attr('class').split('e')[1]) - 1]);
     },
 	animationRevertSpeed: 200,
 	animationSpeed: 400,
@@ -192,36 +198,38 @@ $("#tinderslide").jTinder({
 	dislikeSelector: '.dislike'
 });
 
-function wantItem(itemRef) {
-	var ref = firebase.database().collection('users');
-  /*
-	// Create a reference for a new rating, for use inside the transaction
-	var ratingRef = restaurantRef.collection('ratings').doc();
-  
-	// In a transaction, update the aggregate totals
-	return db.addMatch(itemWanted => {
-		return itemWanted.get(itemRef).then(res => {
-			if (!res.exists) {
-				throw "item does not exist!";
-			}
-  */
-			// Get the current user's matches array and add item
-			var currMatch = ref.where("id", "==", getUniqueId()).matches
-  
-			firebase.firestore()
-			.collection('users')
-			.doc('8JPhhjfCz0GuNz4lUnD8')
-			.set(
-			{ matches: [{ who: "third@test.com", when: new Date() }] },
-			{ merge: true }
-			)
-  
-			// Commit to Firestore
-			currMatch.update({
-				"matches":
-				  FieldValue.arrayUnion(itemRef)
-			});
-		  console.loe("i made it...");
-  /*      })
-	});*/
+function wantItem(itemUrl) {
+	//console.log(itemRef.imageUrl);
+	var ref = firebase.firestore().collection('users');
+	var itemRef = firebase.firestore().collection('items');
+	// Get the current user's matches array and add item
+	itemRef.where("imageUrl", "==", itemUrl).get().then(function(item) {
+		ref.where("id", "==", firebase.auth().currentUser.uid).get().then(function(querySnapshot) {
+			querySnapshot.forEach(function(doc) {
+				console.log(firebase.firestore().collection('users').doc(doc.id).collection('matches').collectionGroup);
+				if (firebase.firestore().collection('users').doc(doc.id).collection('matches').collectionGroup == undefined) {
+					firebase.firestore().collection('users').doc(doc.id).collection('matches').add({
+						currIdx: itemUrl
+					});
+				} else {
+					firebase.firestore().collection('users').doc(doc.id).collection('matches').get().then(function(snap) {
+						snap.forEach(function(d) {
+							firebase.firestore()
+							.collection('users')
+							.doc(doc.id)
+							.collection('matches')
+							.doc(d.id)
+							.set (
+								{[currIdx]: itemUrl},
+								{merge: true}
+							);
+						})
+					})
+				}
+			})
+			currIdx += 1;
+		})
+	})
   }
+
+$('#tinderslide').jTinder();
