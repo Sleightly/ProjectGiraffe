@@ -28,7 +28,7 @@ function signIn() {
           email: getEmail(),
           id: getUniqueId(),
           preference: "miscellaneous",
-          zipcodes: "00000"
+          zipcode: "00000"
         })
       }
     }).then(function() {
