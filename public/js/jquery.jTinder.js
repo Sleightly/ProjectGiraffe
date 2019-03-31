@@ -234,7 +234,6 @@ function wantItem(itemUrl) {
 			//console.log("hello");
 			firebase.firestore().collection('items').doc(itemDoc.id).get().then(function(moreItem) {
 				otherUserId = moreItem.data().userId;
-				console.log(otherUserId);
 				setTimeout(function() {
 					matched = checkMatched(otherUserId, firebase.auth().currentUser.uid);
 				}, 100000);

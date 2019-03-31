@@ -92,8 +92,6 @@
 
       function createCard(item, num) {
         var elem = `<li class="pane${num}"><div class="img" style="background: url('${item.imageUrl}') no-repeat scroll center center; background-size: cover;"></div><div>${item.title}</div><div class="like"></div><div class="dislike"></div></li>`;
-        console.log(item.imageUrl);
-
         document.getElementById('tinderslideul').innerHTML += elem;
       }
 
