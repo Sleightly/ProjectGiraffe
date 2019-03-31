@@ -27,7 +27,9 @@ function checkMatched(otherId, currUserId) {
 				//console.log("query coming up!");
 				//console.log(query);
 				if (query.empty == false) {
-					//console.log("not empty...")
+					$('modal').css('display', 'block');
+					console.log("IT'S A MATCH GOSH.")
+;					//console.log("not empty...")
 					return true;
 				}
 			})
@@ -236,15 +238,6 @@ function wantItem(itemUrl) {
 				otherUserId = moreItem.data().userId;
 				console.log(otherUserId);
 				matched = checkMatched(otherUserId, firebase.auth().currentUser.uid);
-				setTimeout(function() {
-					if (matched) {
-						console.log("hihihihihihihihdiofasofndf");
-						firebase.firestore().collection('matched').add({
-							u1: firebase.auth().currentUser.uid,
-							u2: otherUserId
-						});
-					}
-				}, 100000);
 			});
 		})
 	}).then(function() {
