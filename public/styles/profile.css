@@ -46,6 +46,7 @@ i {
   justify-content: center;
   align-items: center;
   margin-top: 10%;
+  padding: 0 10%;
 }
 
 .profile-header .profile-pic {
@@ -107,6 +108,7 @@ i {
 #editLoc {
   border: 2px solid lightgray;
   width: 50%;
+  padding: 4px;
 }
 
 .for-trade-head {

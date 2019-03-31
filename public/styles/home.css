@@ -74,7 +74,7 @@ nav #brand {
   font-family: 'Mukta', sans-serif;
   font-size: 1.15em;
   font-weight: 400;
-  animation-duration: 4s;
+  animation-duration: 3s;
   animation-timing-function: ease;
   animation-iteration-count: infinite;
 }
@@ -107,11 +107,13 @@ nav #brand {
 }
 
 @keyframes slideRight {
-  from {left: 0%;}
-  to {left: 10%};
+  0% {left: 1%;}
+  75% {left: 10%;}
+  100% {left: 1%;}
 }
 
 @keyframes slideLeft {
-  from {right: 0%;}
-  to {right: 10%;}
+  0% {right: 1%;}
+  75% {right: 10%;}
+  100% {right: 1%;}
 }

@@ -4,11 +4,15 @@ function getLocation() {
   firebase.firestore().collection('users').where("id", "==", user)
   .get()
   .then(function(doc) {
+<<<<<<< HEAD
+    name = doc.data().zipcode;
+=======
   	if (doc.exists) {
   		name = doc.data().location;
   	} else {
   		console.log('no location');
   	}
+>>>>>>> f42593ed834968579bfef4ce6de0ffd14e6e2b1e
   })
   return name;
 }
@@ -59,13 +63,17 @@ function updateName(newName) {
 	if (doc.exists) {
 			doc.update({
 				"name": newName
-			}
+			})
 		}
 	})
 }
 
 function updateLocation(newLoc) {
 	var user = getUserName();
+<<<<<<< HEAD
+	firebase.firestore().collection('users').doc(user).update({
+		"zipcode": newLoc
+=======
 	var name;
 	firebase.firestore().collection('users').where("id", "==", user)
 	.get()
@@ -73,8 +81,9 @@ function updateLocation(newLoc) {
 	if (doc.exists) {
 			doc.update({
 				"location": newLoc
-			}
+			})
 		}
+>>>>>>> f42593ed834968579bfef4ce6de0ffd14e6e2b1e
 	})
 }
 
@@ -87,7 +96,7 @@ function changePreferences(oldPrefs) {
 	if (doc.exists) {
 			doc.update({
 				"preferences": currPref
-			}
+			})
 		}
 	})
 }
@@ -102,7 +111,7 @@ function addOwnedItems(item) {
         doc.update({
 			ownedItems: cItems
 		})
-      })
+  })
 }
 
 function removeOwnedItems(item) {
@@ -116,7 +125,7 @@ function removeOwnedItems(item) {
 		doc.update({
 			ownedItems: cItems
 		})
-    })
+  })
 }
 
 // Returns the signed-in user's display name.
