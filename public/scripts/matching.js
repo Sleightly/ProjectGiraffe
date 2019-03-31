@@ -1,15 +1,13 @@
 // need to install zipcodes using: npm i zipcodes
-function matchingMapGeneration(mId){
-  /*var zipcodes = require('zipcodes');
-  const firebase = require("firebase");
-  // Required for side-effects
-  require("firebase/firestore");
 
+function matchingMapGeneration(mId){
+  require("firebase/firestore");
+  const firebase = require("firebase");
   firebase.initializeApp({
       apiKey: 'AIzaSyD-6L1HaTNNWgkzacsDiD2mhrOW5OCNsaE',
       authDomain: 'project-giraffe-4c1a9.firebaseapp.com',
       projectId: 'project-giraffe-4c1a9'
-      });*/
+      });
 
   var db = firebase.firestore();
   var scores = {};
@@ -27,7 +25,7 @@ function matchingMapGeneration(mId){
       .catch(function(error) {
           console.log("Error getting documents: ", error);
       });
-
+  console.log("arr ",array.length);
   db.collection("users").where("id", "==", mId)
       .get()
       .then(function(querySnapshot) {
@@ -39,7 +37,7 @@ function matchingMapGeneration(mId){
       .catch(function(error) {
           console.log("Error getting documents: ", error);
       });
-
+  console.log("Meh ",Object.keys(scores).length);
   console.log("test",array.length);
   db.collection("items").where('userId','>',mId).get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
@@ -49,13 +47,14 @@ function matchingMapGeneration(mId){
       if(array.indexOf(tempo)>=0){
         count++;
       }
-      if(doc.id in scores){
-        scores[doc.id]++
+      if(doc.data().id in scores){
+        scores[doc.data().id]++
       } else if (count > 0){
-        scores[doc.id] = 1;
+        scores[doc.data().id] = 1;
       }
     });
   });
+    console.log("Meh ",Object.keys(scores).length);
   db.collection("items").where('userId','<',mId).get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
       // doc.data() is never undefined for query doc snapshots
@@ -64,13 +63,14 @@ function matchingMapGeneration(mId){
       if(array.indexOf(tempo)>=0){
         count++;
       }
-      if(doc.id in scores){
-        scores[doc.id]++
+      if(doc.data().id in scores){
+        scores[doc.data().id]++
       } else if (count > 0){
-        scores[doc.id] = 1;
+        scores[doc.data().id] = 1;
       }
     });
   });
+    console.log("Meh ",Object.keys(scores).length);
   db.collection("users").where('id','<',mId).get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
       // doc.data() is never undefined for query doc snapshots
@@ -79,13 +79,14 @@ function matchingMapGeneration(mId){
       if(array.indexOf(tempo)>=0){
         count++;
       }
-      if(doc.id in scores){
-        scores[doc.id]++
+      if(doc.data().id in scores){
+        scores[doc.data().id]++
       } else if (count > 0){
-        scores[doc.id] = 1;
+        scores[doc.data().id] = 1;
       }
     });
   });
+  console.log("Meh ",Object.keys(scores).length);
   if(zip1!=null){
     db.collection("users").where('id','>',mId).get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
@@ -93,26 +94,29 @@ function matchingMapGeneration(mId){
         var zip2 = int(doc.data().zip);
         var x = Math.abs(zip1 - zip2) * 5;
         console.log("dist = ",x);
-        var count = ((1/Math.log(x+1.2))+0.3)/1.2;
+        var dist = ((1/Math.log(x+1.2))+0.3)/1.2;
         console.log("score from dist = ",count);
-        if(doc.id in scores){
-          scores[doc.id] += count;
+        if(doc.data().id in scores){
+          scores[doc.data().id] += dist;
         } else if (count > 0){
-
-          scores[doc.id] = count;
+          scores[doc.data().id] = dist;
         }
       });
     });
   }
+  console.log("Meh ",Object.keys(scores).length);
   var order = [];
-  for (var i = 0; i< scores.size; i++ ){
-    var max = 0;
+  console.log("Meh ",Object.keys(scores).length," " ,order.length);
+  for (var i = 0; i< Object.keys(scores).length; i++ ){
+    var max = Object.keys(scores)[0];
     for (const k of scores.keys()) {
       if(scores[max]<scores[k]){
         max = k;
       }
     }
-    order.push(k);
+    delete scores[max]
+    order.push(max);
   }
+  console.log("DONE WITH RANK ",order.length);
   return order;
 }
