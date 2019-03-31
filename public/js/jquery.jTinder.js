@@ -14,6 +14,31 @@ function passArray(itemArray) {
 	items = itemArray;
 }
 
+function checkMatched(otherId, currUserId) {
+	//console.log("here!");
+	//console.log(otherId);
+	//console.log(currUserId);
+	var ref = firebase.firestore().collection('users');
+	ref.where("id", "==", otherId).get().then(function(querySnap) {
+		//console.log(querySnap);
+		querySnap.forEach(function(doc) {
+			//console.log(doc.id);
+			firebase.firestore().collection('users').doc(doc.id).collection('matches').where("belongs", "==", currUserId).get().then(function(query) {
+				//console.log("query coming up!");
+				//console.log(query);
+				if (query.empty == false) {
+					//console.log("not empty...")
+					return true;
+				}
+			})
+		return false;
+		})
+	})
+	//check otherUserId's matches to see if any of them have the currUserId
+	//if so, then... print something?
+	//if not? okay.
+}
+
 ;(function ($, window, document, undefined) {
 	var pluginName = "jTinder",
 		defaults = {
@@ -199,29 +224,39 @@ $("#tinderslide").jTinder({
 
 function wantItem(itemUrl) {
 	//console.log(itemRef.imageUrl);
+	var matched;
 	var ref = firebase.firestore().collection('users');
 	var itemRef = firebase.firestore().collection('items');
-	var otherUserId = "";
+	var otherUserId;
 	// Get the current user's matches array and add item
 	itemRef.where("imageUrl", "==", itemUrl).get().then(function(item) {
 		item.forEach(function(itemDoc) {
-			console.log("hello");
+			//console.log("hello");
 			firebase.firestore().collection('items').doc(itemDoc.id).get().then(function(moreItem) {
 				otherUserId = moreItem.data().userId;
 				console.log(otherUserId);
+				setTimeout(function() {
+					matched = checkMatched(otherUserId, firebase.auth().currentUser.uid);
+				}, 100000);
 			});
 		})
+<<<<<<< HEAD
+	}).then(function() { 
+		console.log("result..");
+		console.log(matched);
+=======
 	}).then(function() {
+>>>>>>> bf5f363cc05f32f7dca53149c37c325dcc9ceaef
 			ref.where("id", "==", firebase.auth().currentUser.uid).get().then(function(querySnapshot) {
 				querySnapshot.forEach(function(doc) {
-					console.log(firebase.firestore().collection('users').doc(doc.id).collection('matches').collectionGroup);
-					//if (firebase.firestore().collection('users').doc(doc.id).collection('matches').collectionGroup == undefined) {
+					//console.log(firebase.firestore().collection('users').doc(doc.id).collection('matches').collectionGroup);
+					if (firebase.firestore().collection('users').doc(doc.id).collection('matches').collectionGroup == undefined) {
 						firebase.firestore().collection('users').doc(doc.id).collection('matches').add({
 							currIdx: itemUrl,
 							belongs: otherUserId
 						});
-					//} else {
-						/*firebase.firestore().collection('users').doc(doc.id).collection('matches').get().then(function(snap) {
+					} else {
+						firebase.firestore().collection('users').doc(doc.id).collection('matches').get().then(function(snap) {
 							snap.forEach(function(d) {
 								firebase.firestore()
 								.collection('users')
@@ -234,25 +269,18 @@ function wantItem(itemUrl) {
 									{merge: true}
 								);
 							})
-						})*/
-					//}
+						})
+					}
 				})
 				currIdx += 1;
 			})
-		})
-	/*.then(function() {
-		var matched = checkMatched(otherUserId, firebase.auth().currentUser.uid);
-	})*/
+		/*}).then(function() {
+		//var matched = checkMatched(otherUserId, firebase.auth().currentUser.uid);
+		console.log(typeof(otherUserId));
+		console.log(typeof(firebase.auth().currentUser.uid));
+		console.log("results of the match:");
+		console.log(matched);*/
+	})
   }
-
-
-function checkedMatched(otherId, currUserId) {
-	var ref = firebase.firestore().collection('users');
-	ref.where
-	//check otherUserId's matches to see if any of them have the currUserId
-	//if so, then... print something?
-	//if not? okay.
-	return false
-}
 
 $('#tinderslide').jTinder();
