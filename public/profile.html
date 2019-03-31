@@ -48,7 +48,7 @@
         <p>Location: <span id="showLoc"></span><i onclick="editLoc()" class="fas fa-pencil-alt" id="editIcon"></i>
         <input type="text" maxlength="5" style="display: none;" id="editLoc"></p>
         <p>Interested in:
-          <select>
+          <select style="display: none;" onchange='editPref()'>
             <option>Academics</option>
             <option>Accessories</option>
             <option>Clothing</option>
@@ -73,28 +73,12 @@
 
         var photo = user.photoURL;
         var name = user.displayName;
-        var location = getLocation();
-        var preference = getPreference();
-        var items = getItems();
+        getLocation();
+        getPreference();
+        getItems();
         document.getElementById('profPic').src = photo;
         document.getElementById('name').innerText = name;
-        document.getElementById('showLoc').innerText = location;
 
-        var options = document.getElementsByTagName('option');
-        for(var i = 0; i < options.length; i++) {
-          if(options[i].value === preference) {
-            options[i].selected = 'selected';
-            break;
-          }
-        }
-
-        //for(var i = 0; i < items.length; i++) {
-          // <div class="for-trade-item">
-          //   <img>
-          //   <p>A spoon</p>
-          //   <i onclick="deleteItem(this.parent)" class="far fa-trash-alt"></i>
-          // </div>
-        //}
       } else {
         window.location.href = 'index.html';
       }
@@ -108,16 +92,19 @@
       document.body.addEventListener('click', function temp(e) {
         if(e.target.id !== 'editLoc' && e.target.id !== 'editIcon') {
           var newLoc = document.getElementById('editLoc').value;
-          updateLocation(""+newLoc);
-          var location = getLocation();
-          console.log("ret : "+location);
-          document.getElementById('showLoc').innerText = location;
+          var location = updateLocation(""+newLoc);
+          document.getElementById('showLoc').value = location;
           document.getElementById('showLoc').style.display = "inline";
           document.getElementById('editIcon').style.display = "inline";
           document.getElementById('editLoc').style.display = "none";
           document.body.removeEventListener('click', temp);
         }
       })
+    }
+
+    function editPref() {
+      var select = document.getElementsByTagName('select')[0];
+      updatePreference(select.value);
     }
 
     function addItem() {

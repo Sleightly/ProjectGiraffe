@@ -1,136 +1,120 @@
 function getLocation() {
-  var user = getUserName();
-  console.log(user)
-  var name;
-  firebase.firestore().collection('users').where("id", "==", user)
-  .get()
-  .then(function(doc) {
-    if (doc.exists) {
-      name = doc.data().zipcode;
-    } else {
-      console.log('no xd');
-    }
-  })
-  return name;
-  /*.get()
-  .then(function(querySnapshot) {
-    querySnapshot.forEach(function(doc) {
-      if (doc.data().id == user) {
-        name = doc.data().zipcode;
-        console.log("name:  "+name)
-        return name;
+  var promise = new Promise((resolve, reject) => {
+    var user = getUserName();
+    var dbRef = firebase.firestore().collection('users').where('id', '==', user);
+
+    dbRef.get().then(function(querySnapshot) {
+      if(querySnapshot.size > 0) {
+        resolve(querySnapshot.docs[0].data().zipcode);
       } else {
-        console.log('no loc');
+        reject('failed');
       }
-    })
-  })*/
+    });
+  });
+
+  promise.then(function(zip) {
+    document.getElementById('showLoc').innerText = zip;
+  });
 }
 
 function getPreference() {
-  var user = getUserName();
-  var name;
-  firebase.firestore().collection('users').where("id", "==", user)
-  .get()
-  .then(function(doc) {
-    if (doc.exists) {
-  		name = doc.data().preferences;
-  	} else {
-  		console.log('no preferences');
-  	}
-  })
-  return name;
+  var promise = new Promise((resolve, reject) => {
+    var user = getUserName();
+    var dbRef = firebase.firestore().collection('users').where('id', '==', user);
+
+    dbRef.get().then(function(querySnapshot) {
+      if(querySnapshot.size > 0) {
+        resolve(querySnapshot.docs[0].data().preference);
+      } else {
+        reject('failed');
+      }
+    });
+  });
+
+  promise.then(function(preference) {
+    preference = preference.charAt(0).toUpperCase() + preference.slice(1);
+    var options = document.getElementsByTagName('option');
+    for(var i = 0; i < options.length; i++) {
+      if(options[i].value === preference) {
+        options[i].selected = 'selected';
+        break;
+      }
+    }
+    document.getElementsByTagName('select')[0].style.display = 'inline';
+  });
 }
 
 function getItems() {
-  var user = getUserName();
-  var name;
-  firebase.firestore().collection('users').where("id", "==", user)
-  .get()
-  .then(function(doc) {
-    if (doc.exists) {
-  		name = doc.data().ownedItems;
-  	} else {
-  		console.log('no items');
-  	}
-  })
-  return name;
-}
+  var promise = new Promise((resolve, reject) => {
+    var user = getUserName();
+    var itemRef = firebase.firestore().collection('items').where("userId", "==", user);
 
-function updateProfilePic(pic) {
-	var storageRef = firebase.storage().ref();
-	ref.put(pic).then(function(snapshot) {
-	  console.log('Uploaded a blob or file!');
-	});
-}
+    itemRef.get().then(function(querySnapshot) {
+      if (querySnapshot.size > 0) {
+    		resolve(querySnapshot.docs);
+    	} else {
+    		reject('failed');
+    	}
+    });
+  });
 
-function updateName(newName) {
-	var user = getUserName();
-	var name;
-	firebase.firestore().collection('users').where("id", "==", user)
-	.get()
-	.then(function(doc) {
-	if (doc.exists) {
-			doc.update({
-				"name": newName
-			})
-		}
-	})
+  promise.then(function(items) {
+    var container = document.getElementsByClassName('for-trade-items')[0];
+    for(var i = 0; i < items.length; i++) {
+      container.innerHTML += `<div class="for-trade-item"><img src="${items[i].data().imageUrl}"><p>${items[i].data().title}</p><i onclick="deleteItem(this)" class="far fa-trash-alt"></i></div>`;
+    }
+  });
 }
 
 function updateLocation(newLoc) {
+  if(newLoc.length < 5) return;
 	var user = getUserName();
-  console.log(user)
-	firebase.firestore().collection('users')
+	firebase.firestore().collection('users').where('id', '==', user)
   .get()
   .then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
       if (doc.data().id == user) {
          doc.ref.update({ zipcode: newLoc })
-      } else {
-        console.log('no loc');
       }
     })
+    getLocation();
   })
 }
 
-function changePreferences(oldPrefs) {
-	var user = getUserName();
-	var name;
-	firebase.firestore().collection('users').where("id", "==", user)
-	.get()
-	.then(function(doc) {
-	if (doc.exists) {
-			doc.update({
-				"preferences": currPref
-			})
-		}
-	})
-}
-
-function addOwnedItems(item) {
-	var user = getUserName();
-	var cItems;
-	firebase.firestore().collection('users').where("id", "==", user).get()
-      .then(function(doc) {
-        cItems = doc.data().ownedItems;
-        cItems = cItems.push(item);
-        doc.update({
-			ownedItems: cItems
-		})
+function updatePreference(newPref) {
+  var user = getUserName();
+	firebase.firestore().collection('users').where('id', '==', user)
+  .get()
+  .then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      if (doc.data().id == user) {
+         doc.ref.update({ preference: newPref })
+      }
+    })
+    getPreference();
   })
 }
 
-function removeOwnedItems(item) {
-	var user = getUserName();
-	var cItems;
-	firebase.firestore().collection('users').where("id", "==", user).get()
-    .then(function(doc) {
-        cItems = doc.data().ownedItems;
-        var index = cItems.indexOf(item);
-		if (index !== -1) cItems.splice(index, 1);
-		doc.update({
-			ownedItems: cItems
-		})
+function deleteItem(item) {
+  var promise = new Promise((resolve, reject) => {
+    var url = item.parentElement.firstChild.src;
+    var itemRef = firebase.firestore().collection('items').where('imageUrl', '==', url);
+
+    itemRef.get().then(function(querySnapshot) {
+      if (querySnapshot.size > 0) {
+        resolve(querySnapshot.docs[0]);
+      } else {
+        reject('failed');
+      }
+    })
+  });
+
+  promise.then(function(doc) {
+    firebase.firestore().collection('items').doc(doc.id).delete().then(function() {
+      item.parentElement.parentNode.removeChild(item.parentElement);
+    }).catch(function(error) {
+      console.error("Error removing document: ", error);
+    });
   })
 }
 
