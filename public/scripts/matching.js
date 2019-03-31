@@ -104,5 +104,15 @@ function matchingMapGeneration(mId){
       });
     });
   }
-  return scores;
+  var order = [];
+  for (int i =0; i< scores.size; i++ ){
+    int max = 0;
+    for (const k of scores.keys()) {
+      if(scores[max]<scores[k]){
+        max = k;
+      }
+    }
+    order.push(k);
+  }
+  return order;
 }
