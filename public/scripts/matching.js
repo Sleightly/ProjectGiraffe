@@ -4,6 +4,7 @@ function matchingMapGeneration(mId){
   console.log('matching');
   var db = firebase.firestore();
   var scores = {};
+  var distance = {};
   var array = [];
   var zip1;
   var zip2;
@@ -31,35 +32,48 @@ function matchingMapGeneration(mId){
               // doc.data() is never undefined for query doc snapshots
               zip1 = parseInt(doc.data().zipcode);
           });
-          return two(zip1);
+          return five(zip1);
       })
       .catch(function(error) {
           console.log("Error getting documents: ", error);
       });
     }
-
+    function five(zip1) {
+      if(zip1){ db.collection("users").where('id','>',mId).get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+              // doc.data() is never undefined for query doc snapshots
+              var zip2 = parseInt(doc.data().zipcode);
+              if(!zip2) zip2 = 0;
+              var x = Math.abs(zip1 - zip2) * 5;
+              console.log("dist = ",x);
+              var dist = ((1/Math.log(x+1.2))+0.3)/1.2;
+              console.log("score from dist = ",count);
+              distance[doc.data().id] = dist;
+            });
+          });
+        }
+        console.log(5);
+        return two();
+      }
   console.log("Meh ",Object.keys(scores).length);
   console.log("test",array.length);
 
-  function two(zip1) {
+  function two() {
     console.log(2);
     return db.collection("items").where('userId','>',mId).get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
       // doc.data() is never undefined for query doc snapshots
       var tempo = doc.data().type;
-      var count = 0;
+      var count = distance[doc.data().userId];
       if(array.indexOf(tempo)>=0){
         count++;
       }
-      if(doc.data().id in scores){
-        scores[doc.data().id]++
-      } else if (count > 0){
-        scores[doc.data().id] = 1;
-      }
+      scores[doc.data().imageUrl] = count;
     });
-    return three(zip1);
+    return three();
   });
 }
+
     console.log("Meh ",Object.keys(scores).length);
 
     function three() {
@@ -69,64 +83,18 @@ function matchingMapGeneration(mId){
     querySnapshot.forEach(function(doc) {
       // doc.data() is never undefined for query doc snapshots
       var tempo = doc.data().type;
-      var count = 0;
+      var count = distance[doc.data().userId];
       if(array.indexOf(tempo)>=0){
         count++;
       }
-      if(doc.data().id in scores){
-        scores[doc.data().id]++
-      } else if (count > 0){
-        scores[doc.data().id] = 1;
-      }
+      scores[doc.data().imageUrl] = count;
     });
-    return four(zip1);
+    return final();
   });
 }
-    console.log("Meh ",Object.keys(scores).length);
-  function four(zip1) {
-    console.log(4);
-  var count = 0;
-  return db.collection("users").where('id','<',mId).get().then(function(querySnapshot) {
-    querySnapshot.forEach(function(doc) {
-      // doc.data() is never undefined for query doc snapshots
-      var tempo = doc.data().type;
-      count = 0;
-      if(array.indexOf(tempo)>=0){
-        count++;
-      }
-      if(doc.data().id in scores){
-        scores[doc.data().id]++
-      } else if (count > 0){
-        scores[doc.data().id] = 1;
-      }
-    });
-    return five(count,zip1);
-  });
-}
-
 
   console.log("Meh ",Object.keys(scores).length);
-  function five(count,zip1) {
-    if(zip1){ db.collection("users").where('id','>',mId).get().then(function(querySnapshot) {
-          querySnapshot.forEach(function(doc) {
-            // doc.data() is never undefined for query doc snapshots
-            var zip2 = parseInt(doc.data().zipcode);
-            if(!zip2) zip2 = 0;
-            var x = Math.abs(zip1 - zip2) * 5;
-            console.log("dist = ",x);
-            var dist = ((1/Math.log(x+1.2))+0.3)/1.2;
-            console.log("score from dist = ",count);
-            if(doc.data().id in scores){
-              scores[doc.data().id] += dist;
-            } else if (count > 0){
-              scores[doc.data().id] = dist;
-            }
-          });
-        });
-      }
-      console.log(5);
-      return final();
-    }
+
 
     function final() {
       console.log("Meh ",Object.keys(scores).length);
