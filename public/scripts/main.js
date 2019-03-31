@@ -25,7 +25,8 @@ function signIn() {
       profilePicUrl: getProfilePicUrl(),
       email: getEmail(),
       id: getUniqueId(),
-      preferences: []
+      preferences: "miscellaneous",
+      zipcode: "00000"
     }).then(function() {
       if (firebase.auth().currentUser) {
         window.location.href = 'home.html';
