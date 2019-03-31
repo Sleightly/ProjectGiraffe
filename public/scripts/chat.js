@@ -82,7 +82,6 @@ function saveMessage(messageText) {
   }).catch(function(error) {
     console.error('Error writing new message to Firebase Database', error);
   });
-  loadMessages();
 }
 
 // Loads chat messages history and listens for upcoming ones.
