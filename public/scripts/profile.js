@@ -5,6 +5,7 @@ function getLocation() {
   .get()
   .then(function(doc) {
     if(doc.exists) {
+      console.log("TWIC?");
       name = doc.data().zipcode;
     } else {
       console.log('no zipcode');
