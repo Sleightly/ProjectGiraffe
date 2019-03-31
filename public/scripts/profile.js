@@ -6,6 +6,7 @@ function getLocation() {
   .then(function(doc) {
     name = doc.data().location;
   })
+  return name;
 }
 
 function getPreference() {
@@ -16,6 +17,7 @@ function getPreference() {
   .then(function(doc) {
     name = doc.data().preferences;
   })
+  return name;
 }
 
 function getItems() {
@@ -26,6 +28,7 @@ function getItems() {
   .then(function(doc) {
     name = doc.data().ownedItems;
   })
+  return name;
 }
 
 function updateProfilePic(pic) {
