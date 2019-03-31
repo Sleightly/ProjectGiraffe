@@ -33,7 +33,6 @@ function getMatches() {
 			//get profileURL from id
 			setName(name, array[i]);
       setMsg(msg, array[i]);
-      if(msg.innerText == "") continue;
 			setImage(image, array[i]);
 
 			msgs.setAttribute("onclick", "window.location=\"https://project-giraffe-4c1a9.firebaseapp.com/dm.html?p1="+firebase.auth().currentUser.uid+"&p2="+array[i]+"\";");
@@ -111,7 +110,7 @@ function setMsg(text, hash) {
         })
       } else {
         if(querySnapshot.docs[0].data().from == firebase.auth().currentUser.uid) {
-          resolve('You: ' + querySnapshotdocs[0].data().text);
+          resolve('You: ' + querySnapshot.docs[0].data().text);
         } else {
           resolve(querySnapshot.docs[0].data().text);
         }
@@ -123,6 +122,7 @@ function setMsg(text, hash) {
     text.innerText = message;
   })
   .catch(function() {
+    document.getElementsById('new-matches-header').style.display = 'block';
     createNewMatch(hash);
   });
 }
