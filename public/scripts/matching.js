@@ -17,7 +17,6 @@ function matchingMapGeneration(mId){
       .catch(function(error) {
           console.log("Error getting documents: ", error);
       });
-  console.log("arr ",array.length);
   db.collection("users").where("id", "==", mId)
       .get()
       .then(function(querySnapshot) {
@@ -29,8 +28,6 @@ function matchingMapGeneration(mId){
       .catch(function(error) {
           console.log("Error getting documents: ", error);
       });
-  console.log("Meh ",Object.keys(scores).length);
-  console.log("test",array.length);
   db.collection("items").where('userId','>',mId).get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
       // doc.data() is never undefined for query doc snapshots
@@ -46,7 +43,6 @@ function matchingMapGeneration(mId){
       }
     });
   });
-    console.log("Meh ",Object.keys(scores).length);
   db.collection("items").where('userId','<',mId).get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
       // doc.data() is never undefined for query doc snapshots
@@ -62,7 +58,6 @@ function matchingMapGeneration(mId){
       }
     });
   });
-    console.log("Meh ",Object.keys(scores).length);
   db.collection("users").where('id','<',mId).get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
       // doc.data() is never undefined for query doc snapshots
@@ -78,7 +73,6 @@ function matchingMapGeneration(mId){
       }
     });
   });
-  console.log("Meh ",Object.keys(scores).length);
   if(zip1!=null){
     db.collection("users").where('id','>',mId).get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
@@ -96,9 +90,8 @@ function matchingMapGeneration(mId){
       });
     });
   }
-  console.log("Meh ",Object.keys(scores).length);
   var order = [];
-  console.log("Meh ",Object.keys(scores).length," " ,order.length);
+  console.log("test");
   for (var i = 0; i< Object.keys(scores).length; i++ ){
     var max = Object.keys(scores)[0];
     for (const k of scores.keys()) {
@@ -106,9 +99,20 @@ function matchingMapGeneration(mId){
         max = k;
       }
     }
+    console.log("Max ",scores[max]);
     delete scores[max]
     order.push(max);
   }
-  console.log("DONE WITH RANK ",order.length);
+
   return order;
+}
+
+function getBloc(mId){
+  var result = db.collection("users").where("id","==",mId).get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+          // doc.data() is never undefined for query doc snapshots
+          return doc.data();
+      });
+  });
+  return -1;
 }
