@@ -23,25 +23,35 @@ function getUrlVar(name) {
 function authenticate() {
 	var user1 = getUrlVar('p1');
 	var user2 = getUrlVar('p2');
+  console.log(user1)
+  console.log(user2)
 	var myid = getUniqueId();
 	if (myid != user1 && myid != user2) {
-		//window.location.href = 'home.html';
+		window.location.href = 'home.html';
 	}
 	if (myid == user1) {
 		//get user2
     var name;
-		firebase.firestore().collection('users').doc(user2)
+		firebase.firestore().collection('users').where("id", "==", user2)
       .get()
       .then(function(doc) {
-        name = doc.data().name;
+        if (doc.exists) {
+          name = doc.data().name;
+        } else {
+          console.log('no name');
+        }
       })
 		document.getElementById("otherName").innerText = name;
 	} else {
     var name;
-		firebase.firestore().collection('users').doc(user1)
+		firebase.firestore().collection('users').where("id", "==", user1)
       .get()
       .then(function(doc) {
-        name = doc.data().name;
+        if (doc.exists) {
+          name = doc.data().name;
+        } else {
+          console.log('no name');
+        }
       })
 		document.getElementById("otherName").innerText = name;
 	}
@@ -51,6 +61,7 @@ function authenticate() {
 
 // Saves a new message on the Cloud Firestore.
 function saveMessage(messageText) {
+  console.log("save message")
   var myid = getUniqueId();
   var user1 = getUrlVar('p1');
   var user2 = getUrlVar('p2');
@@ -62,7 +73,7 @@ function saveMessage(messageText) {
   }
   var uniqueId = getId(user1, user2);
   // Add a new message entry to the Firebase database.
-  return firebase.firestore().collection('chat').doc(uniqueId).collection('msgs')
+  firebase.firestore().collection('chat').doc(uniqueId).collection('msgs')
     .add({
     from: fromUser,
     to: toUser,
@@ -71,24 +82,17 @@ function saveMessage(messageText) {
   }).catch(function(error) {
     console.error('Error writing new message to Firebase Database', error);
   });
+  loadMessages();
 }
 
 // Loads chat messages history and listens for upcoming ones.
 function loadMessages() {
+  console.log('Load message')
   var user1 = getUrlVar('p1');
   var user2 = getUrlVar('p2');
   var uniqueId = getId(user1, user2);
-  var iamone = true;
 
-  var myid = getUniqueId();
-  if (user1 != myid) {
-  	iamone = false;
-  }
-
-  var query = firebase.firestore().collection('chat').doc(uniqueId).collection('msgs').orderBy('timestamp').limit(1);
-
-  var texts = document.getElementsByClassName('dm-body')[0];
-  texts.innerHTML = "";
+  var query = firebase.firestore().collection('chat').doc(uniqueId).collection('msgs').orderBy('timestamp').limit(12);
 
   // Start listening to the query.
   query.onSnapshot(function(snapshot) {
@@ -100,6 +104,20 @@ function loadMessages() {
 }
 
 function displayMessage(message) {
+  console.log("display message")
+  var user1 = getUrlVar('p1');
+  var user2 = getUrlVar('p2');
+
+  var iamone = true;
+
+  var myid = getUniqueId();
+  if (user1 != myid) {
+    iamone = false;
+  }
+
+
+  var texts = document.getElementsByClassName('dm-body')[0];
+
   var para = document.createElement("p");
   para.innerText = message.text;
   var div = document.createElement("div");
@@ -118,6 +136,7 @@ function displayMessage(message) {
     }
   }
   texts.appendChild(div);
+  console.log(div)
 }
 
 
