@@ -105,7 +105,8 @@ function matchingMapGeneration(mId){
       var order = [];
       console.log("Meh ",Object.keys(scores).length," " ,order.length);
       console.log(5.7);
-      for (var i = 0; i< Object.keys(scores).length; i++ ){
+      var temp = Object.keys(scores).length;
+      for (var i = 0; i< temp; i++ ){
         console.log(5.8);
         var max = Object.keys(scores)[0];
         console.log(5.85);
