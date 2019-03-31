@@ -77,7 +77,7 @@
             order = ret;
             console.log('this is ret');
             console.log(ret[0]);
-            for(var i = 0; i<order.length; i++){ firebase.firestore().collection("items").where('userId','==',order[i]).get()
+            for(var i = 0; i<order.length; i++){ firebase.firestore().collection("items").where('imageUrl','==',order[i]).get()
               .then(function(querySnapshot) {
                 createCard(querySnapshot.docs[0].data(), i);
                 addItem(querySnapshot.docs[0].data().imageUrl);
