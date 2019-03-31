@@ -8,6 +8,19 @@
     <link href="https://fonts.googleapis.com/css?family=Mukta:200,300,400,500,600,700,800" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles/profile.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyD-6L1HaTNNWgkzacsDiD2mhrOW5OCNsaE",
+        authDomain: "project-giraffe-4c1a9.firebaseapp.com",
+        databaseURL: "https://project-giraffe-4c1a9.firebaseio.com",
+        projectId: "project-giraffe-4c1a9",
+        storageBucket: "project-giraffe-4c1a9.appspot.com",
+        messagingSenderId: "836183447667"
+      };
+      firebase.initializeApp(config);
+    </script>
   </head>
   <body>
     <nav>
@@ -26,13 +39,13 @@
     <div class="profile">
       <div class="profile-header">
         <div class="profile-pic">
-          <img>
-          <i onclick="!!" class="fas fa-pen-square pic-edit"></i>
+          <img id="profPic">
         </div>
-        <p>Hubert Dubert</p>
+        <p id="name"></p>
       </div>
       <div class="profile-info">
-        <p>Location: San Diego<i onclick="!!" class="fas fa-pencil-alt"></i></p>
+        <p>Location: <span id="showLoc">92122</span><i onclick="editLoc()" class="fas fa-pencil-alt" id="editIcon"></i>
+        <input type="text" maxlength="5" style="display: none;" id="editLoc"></p>
         <p>Interested in:
           <select>
             <option>Academics</option>
@@ -42,21 +55,53 @@
             <option>Food</option>
             <option>Furniture</option>
             <option>Vehicles</option>
-            <option selected>Anything</option>
+            <option>Anything</option>
           </select>
         </p>
       </div>
       <div class="for-trade-head">
         <p>Current Offers</p>
-        <i onclick="!!" class="fas fa-plus"></i>
+        <i onclick="addItem()" class="fas fa-plus"></i>
       </div>
-      <div class="for-trade-items">
+      <!--<div class="for-trade-items">
         <div class="for-trade-item">
           <img>
           <p>A spoon</p>
-          <i class="far fa-trash-alt"></i>
+          <i onclick="deleteItem(this.parent)" class="far fa-trash-alt"></i>
         </div>
-      </div>
+      </div>-->
     </div>
+    <script>
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if(user) {
+        var photo = user.photoURL;
+        var name = user.displayName;
+        document.getElementById('profPic').src = photo;
+        document.getElementById('name').innerText = name;
+      } else {
+        window.location.href = 'index.html';
+      }
+    });
+
+    function editLoc() {
+      document.getElementById('showLoc').style.display = "none";
+      document.getElementById('editIcon').style.display = "none";
+      document.getElementById('editLoc').style.display = "inline-block";
+
+      document.body.addEventListener('click', function temp(e) {
+        if(e.target.id !== 'editLoc' && e.target.id !== 'editIcon') {
+          document.getElementById('showLoc').style.display = "inline";
+          document.getElementById('editIcon').style.display = "inline";
+          document.getElementById('editLoc').style.display = "none";
+          document.body.removeEventListener('click', temp);
+        }
+      })
+    }
+
+    function addItem() {
+      window.location.href = 'additems.html';
+    }
+    </script>
   </body>
 </html>
