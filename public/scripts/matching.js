@@ -33,7 +33,7 @@ function matchingMapGeneration(mId){
       .then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
               // doc.data() is never undefined for query doc snapshots
-              zip1 = doc.data().zip;
+              zip1 = int(doc.data().zip);
           });
       })
       .catch(function(error) {
@@ -90,7 +90,7 @@ function matchingMapGeneration(mId){
     db.collection("users").where('id','>',mId).get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
         // doc.data() is never undefined for query doc snapshots
-        var zip2 = doc.data().zip;
+        var zip2 = int(doc.data().zip);
         var x = zipcodes.distance(zip1, zip2);
         console.log("dist = ",x);
         var count = ((1/Math.log(x+1.2))+0.3)/1.2;
@@ -98,7 +98,6 @@ function matchingMapGeneration(mId){
         if(doc.id in scores){
           scores[doc.id] += count;
         } else if (count > 0){
-
           scores[doc.id] = count;
         }
       });
