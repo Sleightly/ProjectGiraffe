@@ -55,7 +55,7 @@ function authenticate() {
       })
 		document.getElementById("otherName").innerText = name;
 	}
-	loadMessages();
+  loadMessages();
 }
 
 
@@ -91,13 +91,18 @@ function loadMessages() {
   var user2 = getUrlVar('p2');
   var uniqueId = getId(user1, user2);
 
-  var query = firebase.firestore().collection('chat').doc(uniqueId).collection('msgs').orderBy('timestamp').limit(12);
+  var query = firebase.firestore().collection('chat').doc(uniqueId).collection('msgs').orderBy('timestamp', 'desc').limit(12);
 
   // Start listening to the query.
+  var count = 0;
   query.onSnapshot(function(snapshot) {
     snapshot.docChanges().forEach(function(change) {
+      if (change.type === 'added') {
         var message = change.doc.data();
         displayMessage(message);
+        console.log(count)
+        count += 1
+      }
     });
   });
 }
@@ -159,16 +164,5 @@ function getUniqueId() {
 function getOtherId() {
   //get other id
 }
-
-firebase.auth().onAuthStateChanged(function(user) {
-  console.log(user);
-  if (user) {
-    loadMessages();
-  } else {
-    window.location.href = 'index.html';
-  }
-});
-
-
 
 
