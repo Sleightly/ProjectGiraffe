@@ -34,7 +34,7 @@ function getMatches() {
 		       	image.src = querySnapshot.docs[0].data().profilePicUrl;
 		      }
 		    })
-			
+
 			text.classList.add("message-text");
 			msgs.classList.add("message");
 
