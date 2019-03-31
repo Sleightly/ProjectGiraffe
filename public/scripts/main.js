@@ -40,13 +40,12 @@ function continueSignIn(exists) {
   if(promise) {
     promise.then(function() {
       if(firebase.auth().currentUser) {
-        console.log('would redicrect');
-        //window.location.href = 'home.html';
+        window.location.href = 'home.html';
       }
     });
   } else {
     if(firebase.auth().currentUser) {
-      console.log('would redirect w.o promise');
+      window.location.href = 'home.html';
     }
   }
 }
