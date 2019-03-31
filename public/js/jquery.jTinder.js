@@ -235,18 +235,19 @@ function wantItem(itemUrl) {
 			firebase.firestore().collection('items').doc(itemDoc.id).get().then(function(moreItem) {
 				otherUserId = moreItem.data().userId;
 				console.log(otherUserId);
+				matched = checkMatched(otherUserId, firebase.auth().currentUser.uid);
 				setTimeout(function() {
-					matched = checkMatched(otherUserId, firebase.auth().currentUser.uid);
+					if (matched) {
+						console.log("hihihihihihihihdiofasofndf");
+						firebase.firestore().collection('matched').add({
+							u1: firebase.auth().currentUser.uid,
+							u2: otherUserId
+						});
+					}
 				}, 100000);
 			});
 		})
-<<<<<<< HEAD
-	}).then(function() { 
-		console.log("result..");
-		console.log(matched);
-=======
 	}).then(function() {
->>>>>>> bf5f363cc05f32f7dca53149c37c325dcc9ceaef
 			ref.where("id", "==", firebase.auth().currentUser.uid).get().then(function(querySnapshot) {
 				querySnapshot.forEach(function(doc) {
 					//console.log(firebase.firestore().collection('users').doc(doc.id).collection('matches').collectionGroup);

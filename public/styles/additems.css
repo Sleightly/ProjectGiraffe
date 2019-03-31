@@ -66,13 +66,19 @@ nav #brand {
 .item-info p {
   font-family: 'Mukta', sans-serif;
   font-size: 1em;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .item-info input {
   border: 1px solid lightgray;
   width: 70%;
   margin-left: 4px;
+  padding: 4px;
+}
+
+.item-info input, .item-info select {
+  font-weight: 0.9em;
+  font-weight: 200;
 }
 
 button {
