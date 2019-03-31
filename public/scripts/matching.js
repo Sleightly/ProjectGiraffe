@@ -1,4 +1,6 @@
+// need to install zipcodes using: npm i zipcodes
 function matchingMapGeneration(mId){
+  var zipcodes = require('zipcodes');
   const firebase = require("firebase");
   // Required for side-effects
   require("firebase/firestore");
@@ -12,6 +14,8 @@ function matchingMapGeneration(mId){
   var db = firebase.firestore();
   var scores = {};
   var array = [];
+  var zip1;
+  var zip2;
   db.collection("users").where("id", "==", mId)
       .get()
       .then(function(querySnapshot) {
@@ -24,38 +28,81 @@ function matchingMapGeneration(mId){
           console.log("Error getting documents: ", error);
       });
 
+  db.collection("users").where("id", "==", mId)
+      .get()
+      .then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+              // doc.data() is never undefined for query doc snapshots
+              zip1 = doc.data().zip;
+          });
+      })
+      .catch(function(error) {
+          console.log("Error getting documents: ", error);
+      });
+
   console.log("test",array.length);
-  db.collection("users").where('id','>',mId).get().then(function(querySnapshot) {
+  db.collection("items").where('userId','>',mId).get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
       // doc.data() is never undefined for query doc snapshots
-      var tempo = doc.data().ownedItems;
+      var tempo = doc.data().type;
       var count = 0;
-      for(var i = 0; tempo!=null && i<tempo.length; i++){
-        if(array.indexOf(tempo[i])>=0){
-          count++;
-        }
+      if(array.indexOf(tempo)>=0){
+        count++;
       }
-      if(count!=0){
-        scores[doc.id] = count;
-        console.log(doc.id,"count = "+count);
+      if(doc.id in scores){
+        scores[doc.id]++
+      } else if (count > 0){
+        scores[doc.id] = 1;
+      }
+    });
+  });
+  db.collection("items").where('userId','<',mId).get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      // doc.data() is never undefined for query doc snapshots
+      var tempo = doc.data().type;
+      var count = 0;
+      if(array.indexOf(tempo)>=0){
+        count++;
+      }
+      if(doc.id in scores){
+        scores[doc.id]++
+      } else if (count > 0){
+        scores[doc.id] = 1;
       }
     });
   });
   db.collection("users").where('id','<',mId).get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
       // doc.data() is never undefined for query doc snapshots
-      var tempo = doc.data().ownedItems;
+      var tempo = doc.data().type;
       var count = 0;
-      for(var i = 0; tempo!=null && i<tempo.length; i++){
-        if(array.indexOf(tempo[i])>=0){
-          count++;
-        }
+      if(array.indexOf(tempo)>=0){
+        count++;
       }
-      if(count!=0){
-        scores[doc.id] = count;
-        console.log(doc.id,"count = "+count);
+      if(doc.id in scores){
+        scores[doc.id]++
+      } else if (count > 0){
+        scores[doc.id] = 1;
       }
     });
   });
+  if(zip1!=null){
+    db.collection("users").where('id','>',mId).get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        // doc.data() is never undefined for query doc snapshots
+        var zip2 = doc.data().zip;
+        var x = zipcodes.distance(zip1, zip2);
+        console.log("dist = ",x);
+        var count = ((1/Math.log(x+1.2))+0.3)/1.2;
+        console.log("score from dist = ",count);
+        if(doc.id in scores){
+          scores[doc.id] += count;
+        } else if (count > 0){
+
+          scores[doc.id] = count;
+        }
+      });
+    });
+  }
   return scores;
 }
