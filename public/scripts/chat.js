@@ -25,7 +25,7 @@ function authenticate() {
 	var user2 = getUrlVar('p2');
 	var myid = getUniqueId();
 	if (myid != user1 && myid != user2) {
-		window.location.href = 'home.html';
+		//window.location.href = 'home.html';
 	}
 	if (myid == user1) {
 		//get user2
@@ -142,4 +142,15 @@ function getOtherId() {
   //get other id
 }
 
-loadMessages();
+firebase.auth().onAuthStateChanged(function(user) {
+  console.log(user);
+  if (user) {
+    loadMessages();
+  } else {
+    window.location.href = 'index.html';
+  }
+});
+
+
+
+

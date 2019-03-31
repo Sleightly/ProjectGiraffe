@@ -49,6 +49,7 @@
   </body>
   <script type="text/javascript" src="scripts/chat.js"></script>
   <script>
+    var auth = false;
 
     function sendMessage() {
       saveMessage(document.getElementById('msg').value);
@@ -57,6 +58,7 @@
 
     window.onload = function(e){
       firebase.auth().onAuthStateChanged(function(user) {
+        console.log(user);
         if (user) {
           authenticate();
         } else {

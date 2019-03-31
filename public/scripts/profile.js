@@ -1,3 +1,33 @@
+function getLocation() {
+  var user = getUserName();
+  var name;
+  firebase.firestore().collection('users').doc(user)
+  .get()
+  .then(function(doc) {
+    name = doc.data().location;
+  })
+}
+
+function getPreference() {
+  var user = getUserName();
+  var name;
+  firebase.firestore().collection('users').doc(user)
+  .get()
+  .then(function(doc) {
+    name = doc.data().preferences;
+  })
+}
+
+function getItems() {
+  var user = getUserName();
+  var name;
+  firebase.firestore().collection('users').doc(user)
+  .get()
+  .then(function(doc) {
+    name = doc.data().ownedItems;
+  })
+}
+
 function updateProfilePic(pic) {
 	var storageRef = firebase.storage().ref();
 	ref.put(pic).then(function(snapshot) {
