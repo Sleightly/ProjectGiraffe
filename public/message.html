@@ -39,21 +39,18 @@
     <div class="new-matches-header">
       <p>NEW MATCHES</p>
       <div class="new-matches">
-        <img>
       </div>
     </div>
     <div class="ppl">
-      <div class="message" id="message1">
-        <img>
-        <div class="message-text">
-          <h6>Honker Donker</h6>
-          <p>You: I like those socks!</p>
-        </div>
-      </div>
     </div>
     <script>
-      document.getElementById('message1').addEventListener('click', function() {
-        window.location.href = 'dm.html';
+
+      firebase.auth().onAuthStateChanged(function(user) {
+        if(user) {
+          getMatches();
+        } else {
+          window.location.href = 'index.html';
+        }
       });
     </script>
   </body>

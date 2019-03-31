@@ -104,11 +104,9 @@ function loadMessages() {
       if (change.type === 'added') {
         var message = change.doc.data();
         if(!previous || message.timestamp < previous.timestamp) {
-          console.log('1');
           previous = message;
           displayMessage(message, true);
         } else {
-          console.log('2');
           previous = message;
           displayMessage(message, false);
         }
