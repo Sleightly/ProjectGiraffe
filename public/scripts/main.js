@@ -21,7 +21,7 @@ function signIn() {
   var provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider).then(function(result) {
       if(!checkLoginExists(getUniqueId())){
-        firebase.firestore().collection('users').add({
+        firebase.firestore().collection('users').add(g{
           name: getUserName(),
           profilePicUrl: getProfilePicUrl(),
           email: getEmail(),
