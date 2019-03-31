@@ -155,13 +155,6 @@ function matchingMapGeneration(mId){
         }, 10)
       });
     }
-    console.log("Max ",scores[max]);
-    delete scores[max]
-    order.push(max);
-    console.log('pushed to order');
-  }
-
-  return order;
 }
 
 function getBloc(mId){

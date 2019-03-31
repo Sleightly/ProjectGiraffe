@@ -75,12 +75,8 @@
             console.log(ret[0]);
             for(var i = 0; i<order.length; i++){ firebase.firestore().collection("items").where('userId','==',order[i]).get()
               .then(function(querySnapshot) {
-                console.log('here?');
-                if(querySnapshot.size > 0) {
-                  console.log('did it go');
-                  createCard(querySnapshot.docs[0].data(), i);
-                  addItem(querySnapshot.docs[0].data().imageUrl);
-                }
+                createCard(querySnapshot.docs[0].data(), i);
+                addItem(querySnapshot.docs[0].data().imageUrl);
               })
               .then(function() {
                 var script = document.createElement('script'),
@@ -107,59 +103,26 @@
           console.log("Error getting documents: ", error);
         });
 
-              createCard(getBloc(max), i);
-              addItem(getBloc(max).imageUrl);
-              order.splice(max);
-              i++;
-            }
+        function createCard(item, num) {
+          var elem = `<li class="pane${num}"><div class="img" style="background: url('${item.imageUrl}') no-repeat scroll center center; background-size: cover;"></div><div>${item.title}</div><div class="like"></div><div class="dislike"></div></li>`;
+          document.getElementById('tinderslideul').innerHTML += elem;
+        }
 
-            var ref = firebase.firestore().collection("items")
-              .get()
-              .then(function(querySnapshot) {querySnapshot.forEach(function(doc) {
-                });
-              }).then(function() {
-                var script = document.createElement('script'),
-                scripts = document.getElementsByTagName('script')[0];
-                script.src = 'js/jquery.transform2d.js';
-                scripts.parentNode.insertBefore(script, scripts);
-              }).then(function() {
-                var script = document.createElement('script'),
-                scripts = document.getElementsByTagName('script')[0];
-                script.src = 'js/jquery.jTinder.js';
-                scripts.parentNode.insertBefore(script, scripts);
-                document.getElementById('nomore').style.display = 'block';
-              }).then(function() {
-                setTimeout(function() {
-                  passArray(itemArray);
-                }, 600);
-              })
-              .catch(function(error) {
-                console.log("Error getting documents: ", error);
-              });
+        function addItem(url) {
+          itemArray.push(url);
+        }
 
-            function createCard(item, num) {
-              var elem = `<li class="pane${num}"><div class="img" style="background: url('${item.imageUrl}') no-repeat scroll center center; background-size: cover;"></div><div>${item.title}</div><div class="like"></div><div class="dislike"></div></li>`;
-              document.getElementById('tinderslideul').innerHTML += elem;
-            }
+        function closeModal() {
+          document.getElementsByClassName('modal')[0].style.display = 'none';
+        }
 
-            function addItem(url) {
-              itemArray.push(url);
-            }
-
-            function closeModal() {
-              document.getElementsByClassName('modal')[0].style.display = 'none';
-            }
-
-            document.body.addEventListener('click', function temp(e) {
-              console.log('added');
-              if(e.target.id === 'modal') {
-                document.body.removeEventListener('click', temp);
-                closeModal();
-              }
-            })
+        document.body.addEventListener('click', function temp(e) {
+          console.log('added');
+          if(e.target.id === 'modal') {
+            document.body.removeEventListener('click', temp);
+            closeModal();
           }
         });
-      }
     </script>
   </body>
 </html>
