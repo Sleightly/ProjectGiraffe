@@ -4,7 +4,7 @@ function getLocation() {
   firebase.firestore().collection('users').doc(user)
   .get()
   .then(function(doc) {
-    name = doc.data().location;
+    name = doc.data().zipcode;
   })
   return name;
 }
@@ -48,7 +48,7 @@ function updateName(newName) {
 function updateLocation(newLoc) {
 	var user = getUserName();
 	firebase.firestore().collection('users').doc(user).update({
-		"Location": newLoc
+		"zipcode": newLoc
 	})
 }
 
