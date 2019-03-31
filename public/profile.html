@@ -74,6 +74,7 @@
         var photo = user.photoURL;
         var name = user.displayName;
         var location = getLocation();
+        console.log(location)
         var preference = getPreference();
         var items = getItems();
         document.getElementById('profPic').src = photo;
@@ -88,13 +89,13 @@
           }
         }
 
-        for(var i = 0; i < items.length; i++) {
+        //for(var i = 0; i < items.length; i++) {
           // <div class="for-trade-item">
           //   <img>
           //   <p>A spoon</p>
           //   <i onclick="deleteItem(this.parent)" class="far fa-trash-alt"></i>
           // </div>
-        }
+        //}
       } else {
         window.location.href = 'index.html';
       }
@@ -108,7 +109,9 @@
       document.body.addEventListener('click', function temp(e) {
         if(e.target.id !== 'editLoc' && e.target.id !== 'editIcon') {
           var newLoc = document.getElementById('editLoc').value;
-          updateLocation(newLoc);
+          console.log("UPDATING LOC")
+          console.log(newLoc)
+          updateLocation(""+newLoc);
           document.getElementById('showLoc').style.display = "inline";
           document.getElementById('editIcon').style.display = "inline";
           document.getElementById('editLoc').style.display = "none";
