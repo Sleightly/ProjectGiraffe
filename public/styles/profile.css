@@ -182,6 +182,8 @@ i {
   box-shadow: 0 0 10px black;
   background-color: white;
   padding: 10% 2%;
+  font-family: 'Mukta', sans-serif;
+  font-weight: 200;
 }
 
 .preview {
@@ -213,14 +215,4 @@ i {
   width: 100vw;
   z-index: 1;
   background-color: rgba(0, 0, 0, 0.5);
-}
-
-#notif {
-  background-color: #FF9EF6;
-  box-shadow: 0 0 5px black;
-  display: none;
-  position: absolute;
-  top: 10%;
-  margin-left: auto;
-  margin-right: auto;
 }

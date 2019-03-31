@@ -63,6 +63,7 @@
     <script type="text/javascript" src="scripts/main.js"></script>
     <script type="text/javascript" src="scripts/matching.js"></script>
     <script>
+<<<<<<< HEAD
       var auth = false;
       window.onload = function(e){
         firebase.auth().onAuthStateChanged(function(user) {
@@ -80,6 +81,37 @@
                   max = j;
                 }
               }
+=======
+      var itemArray = [];
+      var ref = firebase.firestore().collection("items")
+        .get()
+        .then(function(querySnapshot) {
+          var order = matchingMapGeneration(getUniqueId());
+          for(var i = 0; i<order.length; i++){
+            doc = firebase.firestore().collection("items").where('id','=',order[i]).get();
+            createCard(doc.data(), i);
+            addItem(doc.data().imageUrl);
+          }
+        }).then(function() {
+          var script = document.createElement('script'),
+          scripts = document.getElementsByTagName('script')[0];
+          script.src = 'js/jquery.transform2d.js';
+          scripts.parentNode.insertBefore(script, scripts);
+        }).then(function() {
+          var script = document.createElement('script'),
+          scripts = document.getElementsByTagName('script')[0];
+          script.src = 'js/jquery.jTinder.js';
+          scripts.parentNode.insertBefore(script, scripts);
+          document.getElementById('nomore').style.display = 'block';
+        }).then(function() {
+          setTimeout(function() {
+            passArray(itemArray);
+          }, 600);
+        })
+        .catch(function(error) {
+          console.log("Error getting documents: ", error);
+        });
+>>>>>>> b1b2f2d93cb33a11ec64022b8b897bf975272897
 
               createCard(getBloc(max), i);
               addItem(getBloc(max).imageUrl);
