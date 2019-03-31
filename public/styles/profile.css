@@ -8,7 +8,7 @@ body {
 
 nav {
   height: 60px;
-  background-color: #C4EDFF;
+  background-color: #60CEFF;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -132,4 +132,9 @@ i {
   font-family: 'Mukta', sans-serif;
   font-size: 1em;
   margin-left: 10%;
+  flex: 1;
+}
+
+.for-trade-item i {
+  margin-right: 10%;
 }
