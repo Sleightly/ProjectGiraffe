@@ -19,21 +19,22 @@
 function signIn() {
   // Sign in Firebase using popup auth and Google as the identity provider.
   var provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider).then(function(result) {
-      if(!checkLoginExists(getUniqueId())){
-        firebase.firestore().collection('users').add(g{
+  firebase.auth().signInWithPopup(provider)
+    .then(function(result) {
+      if(!checkLoginExists(getUniqueId())) {
+        firebase.firestore().collection('users').add({
           name: getUserName(),
           profilePicUrl: getProfilePicUrl(),
           email: getEmail(),
           id: getUniqueId(),
           preferences: []
+        })
       }
     }).then(function() {
       if (firebase.auth().currentUser) {
         window.location.href = 'home.html';
       }
-    });
-  }).catch(function(error) {
+    }).catch(function(error) {
       console.error('Error sending profile information to Firebase Database', error);
   });
 }
@@ -72,7 +73,7 @@ function isUserSignedIn() {
 // returns true if the login exists otherwise its false
 function checkLoginExists(id){
   var result = -1;
-  db.collection("users").where("id", "==", id)
+  firebase.firestore().collection("users").where("id", "==", id)
       .get()
       .then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
