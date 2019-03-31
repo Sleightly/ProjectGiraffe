@@ -1,6 +1,6 @@
 // need to install zipcodes using: npm i zipcodes
 function matchingMapGeneration(mId){
-  var zipcodes = require('zipcodes');
+  /*var zipcodes = require('zipcodes');
   const firebase = require("firebase");
   // Required for side-effects
   require("firebase/firestore");
@@ -9,7 +9,7 @@ function matchingMapGeneration(mId){
       apiKey: 'AIzaSyD-6L1HaTNNWgkzacsDiD2mhrOW5OCNsaE',
       authDomain: 'project-giraffe-4c1a9.firebaseapp.com',
       projectId: 'project-giraffe-4c1a9'
-      });
+      });*/
 
   var db = firebase.firestore();
   var scores = {};
@@ -21,7 +21,7 @@ function matchingMapGeneration(mId){
       .then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
               // doc.data() is never undefined for query doc snapshots
-              array = doc.data().preferences;
+              array = [doc.data().preferences];
           });
       })
       .catch(function(error) {
@@ -33,7 +33,7 @@ function matchingMapGeneration(mId){
       .then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
               // doc.data() is never undefined for query doc snapshots
-              zip1 = int(doc.data().zip);
+              zip1 = parseInt(doc.data().zipcode);
           });
       })
       .catch(function(error) {
@@ -91,7 +91,7 @@ function matchingMapGeneration(mId){
       querySnapshot.forEach(function(doc) {
         // doc.data() is never undefined for query doc snapshots
         var zip2 = int(doc.data().zip);
-        var x = zipcodes.distance(zip1, zip2);
+        var x = Math.abs(zip1 - zip2) * 5;
         console.log("dist = ",x);
         var count = ((1/Math.log(x+1.2))+0.3)/1.2;
         console.log("score from dist = ",count);
