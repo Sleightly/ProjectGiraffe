@@ -6,7 +6,7 @@ function uploadPhoto(pic, title, type, user) {
 	task.then(snapshot => snapshot.ref.getDownloadURL())
 	.then(function(url) => link = url)
 
-	firebase.firestore().collection('items').set({
+	firebase.firestore().collection('items').add({
 		"title": title,
 		"types": type,
 		"userId": user,
