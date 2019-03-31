@@ -85,7 +85,7 @@ function loadMessages() {
   	iamone = false;
   }
 
-  var query = firebase.firestore().collection('chat').doc(uniqueId).collection('msgs').orderBy('timestamp').limit(12);
+  var query = firebase.firestore().collection('chat').doc(uniqueId).collection('msgs').orderBy('timestamp').limit(1);
 
   var texts = document.getElementsByClassName('dm-body')[0];
   texts.innerHTML = "";
@@ -141,6 +141,5 @@ function getUniqueId() {
 function getOtherId() {
   //get other id
 }
-
 
 loadMessages();

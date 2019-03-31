@@ -1,3 +1,10 @@
+function updateProfilePic(pic) {
+	var storageRef = firebase.storage().ref();
+	ref.put(pic).then(function(snapshot) {
+	  console.log('Uploaded a blob or file!');
+	});
+}
+
 function updateName(newName) {
 	var user = getUserName();
 	firebase.firestore().collection('users').doc(user).update({
