@@ -99,9 +99,9 @@ button {
   box-shadow: 0 0 5px black;
   position: absolute;
   top: calc(50% - 50px);
-  left: calc(50% - 50px);
+  left: calc(50% - 100px);
   height: 100px;
-  width: 100px;
+  width: 200px;
 }
 
 #modal p {

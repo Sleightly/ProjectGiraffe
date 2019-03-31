@@ -93,21 +93,27 @@ function loadMessages() {
 
   var query = firebase.firestore().collection('chat').doc(uniqueId).collection('msgs').orderBy('timestamp', 'desc').limit(12);
 
+  var previous;
   // Start listening to the query.
-  var count = 0;
   query.onSnapshot(function(snapshot) {
     snapshot.docChanges().forEach(function(change) {
       if (change.type === 'added') {
         var message = change.doc.data();
-        displayMessage(message);
-        console.log(count)
-        count += 1
+        if(!previous || message.timestamp < previous.timestamp) {
+          console.log('1');
+          previous = message;
+          displayMessage(message, true);
+        } else {
+          console.log('2');
+          previous = message;
+          displayMessage(message, false);
+        }
       }
     });
   });
 }
 
-function displayMessage(message) {
+function displayMessage(message, bool) {
   console.log("display message")
   var user1 = getUrlVar('p1');
   var user2 = getUrlVar('p2');
@@ -139,8 +145,8 @@ function displayMessage(message) {
       div.classList.add("speech-bubble-out");
     }
   }
-  texts.appendChild(div);
-  console.log(div)
+  if(bool) texts.appendChild(div);
+  else texts.insertBefore(div, texts.firstChild);
 }
 
 
@@ -164,5 +170,3 @@ function getUniqueId() {
 function getOtherId() {
   //get other id
 }
-
-
