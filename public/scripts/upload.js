@@ -11,8 +11,11 @@ function uploadPhoto(pic, title, type, user) {
     		types: type,
     		userId: user,
     		imageUrl: url
-    	});
-    }, 100);
+    	})
+      .then(function() {
+        window.location.href = "profile.html";
+      })
+    }, 10);
   });
 
 }
