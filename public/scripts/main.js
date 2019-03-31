@@ -22,7 +22,7 @@ function signIn() {
   firebase.auth().signInWithPopup(provider)
     .then(function(result) {
       if(!checkLoginExists(getUniqueId())) {
-        firebase.firestore().collection('users').add({
+        firebase.firestore().collection('users').doc(getUserName()).set({
           name: getUserName(),
           profilePicUrl: getProfilePicUrl(),
           email: getEmail(),
