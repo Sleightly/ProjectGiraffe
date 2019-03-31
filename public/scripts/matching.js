@@ -108,6 +108,7 @@ function matchingMapGeneration(mId){
     }
     delete scores[max]
     order.push(max);
+    console.log('pushed to order');
   }
   console.log("DONE WITH RANK ",order.length);
   return order;

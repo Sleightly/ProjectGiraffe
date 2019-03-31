@@ -242,7 +242,7 @@ $("#tinderslide").jTinder({
     onDislike: function (item) {
     },
     onLike: function (item) {
-        wantItem(items[parseInt(item.attr('class').split('e')[1]) - 1]);
+      wantItem(items[parseInt(item.attr('class').split('e')[1]) - 1]);
     },
 	animationRevertSpeed: 200,
 	animationSpeed: 400,
@@ -263,7 +263,6 @@ function wantItem(itemUrl) {
 			//console.log("hello");
 			firebase.firestore().collection('items').doc(itemDoc.id).get().then(function(moreItem) {
 				otherUserId = moreItem.data().userId;
-				console.log(otherUserId);
 				matched = checkMatched(otherUserId, firebase.auth().currentUser.uid);
 			});
 		})
@@ -295,13 +294,10 @@ function wantItem(itemUrl) {
 				})
 				currIdx += 1;
 			})
-		/*}).then(function() {
-		//var matched = checkMatched(otherUserId, firebase.auth().currentUser.uid);
-		console.log(typeof(otherUserId));
-		console.log(typeof(firebase.auth().currentUser.uid));
-		console.log("results of the match:");
-		console.log(matched);*/
-	})
+    })
+    .then(function() {
+      window.location.href = "dm.html?p1="+firebase.auth().currentUser.uid+"&p2="+otherUserId;
+    })
   }
 
 $('#tinderslide').jTinder();
