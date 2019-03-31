@@ -68,6 +68,7 @@
     <script type="text/javascript" src="scripts/main.js"></script>
     <script>
       var itemArray = [];
+      var num = 0;
       var order;
       var ref = firebase.firestore().collection("items")
         .get()
@@ -77,8 +78,9 @@
             order = ret;
             for(var i = 0; i<order.length; i++){ firebase.firestore().collection("items").where('imageUrl','==',order[i]).get()
               .then(function(querySnapshot) {
-                createCard(querySnapshot.docs[0].data(), i);
+                createCard(querySnapshot.docs[0].data(), num);
                 addItem(querySnapshot.docs[0].data().imageUrl);
+                num++;
               })
               .then(function() {
                 var script = document.createElement('script'),
@@ -114,6 +116,10 @@
 
         function closeModal() {
           document.getElementsByClassName('modal')[0].style.display = 'none';
+          document.getElementById('pic1').src = "";
+          document.getElementById('pic2').src = "";
+          document.getElementById('txt1').innerText = "";
+          document.getElementById('txt2').innerText = "";
         }
 
         document.body.addEventListener('click', function temp(e) {
