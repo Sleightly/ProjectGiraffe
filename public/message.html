@@ -7,6 +7,20 @@
     <link rel="icon" href="images/icon.png">
     <link href="https://fonts.googleapis.com/css?family=Mukta:200,300,400,500,600,700,800" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles/message.css">
+    <script src="scripts/message.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyD-6L1HaTNNWgkzacsDiD2mhrOW5OCNsaE",
+        authDomain: "project-giraffe-4c1a9.firebaseapp.com",
+        databaseURL: "https://project-giraffe-4c1a9.firebaseio.com",
+        projectId: "project-giraffe-4c1a9",
+        storageBucket: "project-giraffe-4c1a9.appspot.com",
+        messagingSenderId: "836183447667"
+      };
+      firebase.initializeApp(config);
+    </script>
   </head>
   <body>
     <nav>
@@ -28,11 +42,13 @@
         <img>
       </div>
     </div>
-    <div class="message" id="message1">
-      <img>
-      <div class="message-text">
-        <h6>Honker Donker</h6>
-        <p>You: I like those socks!</p>
+    <div class="ppl">
+      <div class="message" id="message1">
+        <img>
+        <div class="message-text">
+          <h6>Honker Donker</h6>
+          <p>You: I like those socks!</p>
+        </div>
       </div>
     </div>
     <script>
