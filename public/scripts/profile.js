@@ -59,7 +59,7 @@ function updateName(newName) {
 	if (doc.exists) {
 			doc.update({
 				"name": newName
-			}
+			})
 		}
 	})
 }
@@ -73,7 +73,7 @@ function updateLocation(newLoc) {
 	if (doc.exists) {
 			doc.update({
 				"location": newLoc
-			}
+			})
 		}
 	})
 }
@@ -87,7 +87,7 @@ function changePreferences(oldPrefs) {
 	if (doc.exists) {
 			doc.update({
 				"preferences": currPref
-			}
+			})
 		}
 	})
 }
@@ -102,7 +102,7 @@ function addOwnedItems(item) {
         doc.update({
 			ownedItems: cItems
 		})
-      })
+  })
 }
 
 function removeOwnedItems(item) {
@@ -116,7 +116,7 @@ function removeOwnedItems(item) {
 		doc.update({
 			ownedItems: cItems
 		})
-    })
+  })
 }
 
 // Returns the signed-in user's display name.
