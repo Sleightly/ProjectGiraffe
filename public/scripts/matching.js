@@ -15,7 +15,7 @@ function matchingMapGeneration(mId){
               // doc.data() is never undefined for query doc snapshots
               array = [doc.data().preferences];
           });
-          return one();
+          return one(mId);
       })
       .catch(function(error) {
           console.log("Error getting documents: ", error);
@@ -23,7 +23,7 @@ function matchingMapGeneration(mId){
   console.log("arr ",array.length);
 
 
-  function one(){
+  function one(mId){
     console.log(1);
     return db.collection("users").where("id", "==", mId)
       .get()
@@ -32,13 +32,13 @@ function matchingMapGeneration(mId){
               // doc.data() is never undefined for query doc snapshots
               zip1 = parseInt(doc.data().zipcode);
           });
-          return five(zip1);
+          return five(zip1,mId);
       })
       .catch(function(error) {
           console.log("Error getting documents: ", error);
       });
     }
-    function five(zip1) {
+    function five(zip1,mId) {
       if(zip1){ db.collection("users").where('id','>',mId).get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
               // doc.data() is never undefined for query doc snapshots
@@ -53,12 +53,12 @@ function matchingMapGeneration(mId){
           });
         }
         console.log(5);
-        return two();
+        return two(mId);
       }
   console.log("Meh ",Object.keys(scores).length);
   console.log("test",array.length);
 
-  function two() {
+  function two(mId) {
     console.log(2);
     return db.collection("items").where('userId','>',mId).get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
@@ -68,15 +68,17 @@ function matchingMapGeneration(mId){
       if(array.indexOf(tempo)>=0){
         count++;
       }
-      scores[doc.data().imageUrl] = count;
+      if(doc.data().userId!= mId){
+        scores[doc.data().imageUrl] = count;
+      }
     });
-    return three();
+    return three(mId);
   });
 }
 
     console.log("Meh ",Object.keys(scores).length);
 
-    function three() {
+    function three(mId) {
       console.log(3);
       return db.collection("items").where('userId','<',mId).get().then(function(querySnapshot) {
        console.log(3.2);
@@ -87,16 +89,18 @@ function matchingMapGeneration(mId){
       if(array.indexOf(tempo)>=0){
         count++;
       }
-      scores[doc.data().imageUrl] = count;
+      if(doc.data().userId!= mId){
+        scores[doc.data().imageUrl] = count;
+      }
     });
-    return final();
+    return final(mId);
   });
 }
 
   console.log("Meh ",Object.keys(scores).length);
 
 
-    function final() {
+    function final(mId) {
       console.log("Meh ",Object.keys(scores).length);
       var order = [];
       console.log("Meh ",Object.keys(scores).length," " ,order.length);
