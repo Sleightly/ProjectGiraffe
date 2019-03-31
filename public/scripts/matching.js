@@ -102,6 +102,7 @@ function matchingMapGeneration(mId){
     console.log("Max ",scores[max]);
     delete scores[max]
     order.push(max);
+    console.log('pushed to order');
   }
 
   return order;
