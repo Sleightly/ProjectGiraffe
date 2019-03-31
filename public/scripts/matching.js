@@ -1,3 +1,4 @@
+// need to install zipcodes using: npm i zipcodes
 function matchingMapGeneration(mId){
   var zipcodes = require('zipcodes');
   const firebase = require("firebase");
