@@ -28,13 +28,13 @@ function signIn() {
 function continueSignIn(exists) {
   if(!exists) {
     console.log('continuing');
-    var promise = firebase.firestore().collection('users').add({
+    var promise = firebase.firestore().collection('users').doc(getUserName()).set({
       name: getUserName(),
       profilePicUrl: getProfilePicUrl(),
       email: getEmail(),
       id: getUniqueId(),
       preference: "miscellaneous",
-      zipcodes: "00000"
+      zipcode: "00000"
     });
   }
   if(promise) {
