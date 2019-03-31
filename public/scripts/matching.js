@@ -1,14 +1,6 @@
 // need to install zipcodes using: npm i zipcodes
 
 function matchingMapGeneration(mId){
-  require("firebase/firestore");
-  const firebase = require("firebase");
-  firebase.initializeApp({
-      apiKey: 'AIzaSyD-6L1HaTNNWgkzacsDiD2mhrOW5OCNsaE',
-      authDomain: 'project-giraffe-4c1a9.firebaseapp.com',
-      projectId: 'project-giraffe-4c1a9'
-      });
-
   var db = firebase.firestore();
   var scores = {};
   var array = [];
