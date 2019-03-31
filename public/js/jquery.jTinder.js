@@ -29,6 +29,21 @@ function checkMatched(otherId, currUserId) {
 				if (query.empty == false) {
 					$('#modal').css('display', 'block');
 					console.log("IT'S A MATCH GOSH.")
+					if (firebase.firestore().collection('users').doc(doc.id).collection('potentialBuyers').collectionGroup == undefined) {
+						firebase.firestore().collection('users').doc(doc.id).collection('potentialBuyers').add({
+							matchedWith: currUserId
+						}).then(function() {
+							ref.where("id", "==", currUserId).get().then(function(querySnapshot) {
+								querySnapshot.forEach(function(doc2) {
+									firebase.firestore().collection('users').doc(doc2.id).collection('potentialBuyers').add ({
+										matchedWith: otherId
+									})
+								})
+							})
+						});
+					} else {
+					
+					}
 ;					//console.log("not empty...")
 					return true;
 				}
