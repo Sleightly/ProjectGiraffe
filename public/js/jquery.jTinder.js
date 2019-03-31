@@ -234,8 +234,16 @@ function wantItem(itemUrl) {
 			//console.log("hello");
 			firebase.firestore().collection('items').doc(itemDoc.id).get().then(function(moreItem) {
 				otherUserId = moreItem.data().userId;
+				console.log(otherUserId);
+				matched = checkMatched(otherUserId, firebase.auth().currentUser.uid);
 				setTimeout(function() {
-					matched = checkMatched(otherUserId, firebase.auth().currentUser.uid);
+					if (matched) {
+						console.log("hihihihihihihihdiofasofndf");
+						firebase.firestore().collection('matched').add({
+							u1: firebase.auth().currentUser.uid,
+							u2: otherUserId
+						});
+					}
 				}, 100000);
 			});
 		})
