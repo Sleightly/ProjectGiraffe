@@ -155,5 +155,21 @@ function matchingMapGeneration(mId){
         }, 10)
       });
     }
+    console.log("Max ",scores[max]);
+    delete scores[max]
+    order.push(max);
+    console.log('pushed to order');
+  }
 
+  return order;
+}
+
+function getBloc(mId){
+  var result = db.collection("users").where("id","==",mId).get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+          // doc.data() is never undefined for query doc snapshots
+          return doc.data();
+      });
+  });
+  return -1;
 }

@@ -107,27 +107,59 @@
           console.log("Error getting documents: ", error);
         });
 
-      function createCard(item, num) {
-        var elem = `<li class="pane${num}"><div class="img" style="background: url('${item.imageUrl}') no-repeat scroll center center; background-size: cover;"></div><div>${item.title}</div><div class="like"></div><div class="dislike"></div></li>`;
-        document.getElementById('tinderslideul').innerHTML += elem;
+              createCard(getBloc(max), i);
+              addItem(getBloc(max).imageUrl);
+              order.splice(max);
+              i++;
+            }
+
+            var ref = firebase.firestore().collection("items")
+              .get()
+              .then(function(querySnapshot) {querySnapshot.forEach(function(doc) {
+                });
+              }).then(function() {
+                var script = document.createElement('script'),
+                scripts = document.getElementsByTagName('script')[0];
+                script.src = 'js/jquery.transform2d.js';
+                scripts.parentNode.insertBefore(script, scripts);
+              }).then(function() {
+                var script = document.createElement('script'),
+                scripts = document.getElementsByTagName('script')[0];
+                script.src = 'js/jquery.jTinder.js';
+                scripts.parentNode.insertBefore(script, scripts);
+                document.getElementById('nomore').style.display = 'block';
+              }).then(function() {
+                setTimeout(function() {
+                  passArray(itemArray);
+                }, 600);
+              })
+              .catch(function(error) {
+                console.log("Error getting documents: ", error);
+              });
+
+            function createCard(item, num) {
+              var elem = `<li class="pane${num}"><div class="img" style="background: url('${item.imageUrl}') no-repeat scroll center center; background-size: cover;"></div><div>${item.title}</div><div class="like"></div><div class="dislike"></div></li>`;
+              document.getElementById('tinderslideul').innerHTML += elem;
+            }
+
+            function addItem(url) {
+              itemArray.push(url);
+            }
+
+            function closeModal() {
+              document.getElementsByClassName('modal')[0].style.display = 'none';
+            }
+
+            document.body.addEventListener('click', function temp(e) {
+              console.log('added');
+              if(e.target.id === 'modal') {
+                document.body.removeEventListener('click', temp);
+                closeModal();
+              }
+            })
+          }
+        });
       }
-
-      function addItem(url) {
-        itemArray.push(url);
-      }
-
-      function closeModal() {
-        document.getElementsByClassName('modal')[0].style.display = 'none';
-      }
-
-      document.body.addEventListener('click', function temp(e) {
-        console.log('added');
-        if(e.target.id === 'modal') {
-          document.body.removeEventListener('click', temp);
-          closeModal();
-        }
-      })
-
     </script>
   </body>
 </html>
